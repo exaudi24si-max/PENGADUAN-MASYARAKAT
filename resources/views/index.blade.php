@@ -2,18 +2,17 @@
 <html lang="id">
 
 <head>
+
+    {{-- ▼ MULAI BAGIAN PARTIALS/HEAD.BLADE.PHP ▼ --}}
     <title>Pengaduan & Aspirasi Masyarakat</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <!-- Icon Fonts -->
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/fonts/icomoon/style.css') }}">
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/fonts/flaticon/font/flaticon.css') }}">
 
-    <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/css/bootstrap/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/css/owl.carousel.min.css') }}">
@@ -25,13 +24,14 @@
 
     {{-- ini link dari navbar --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    {{-- ▲ SELESAI BAGIAN PARTIALS/HEAD.BLADE.PHP ▲ --}}
 
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     <div class="site-wrap" id="home-section">
 
-        <!-- Navbar -->
+        {{-- ▼ MULAI BAGIAN PARTIALS/NAVBAR.BLADE.PHP ▼ --}}
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
             <div class="container">
                 <a class="navbar-brand fw-bold text-white" href="#home-section">
@@ -53,11 +53,15 @@
                 </div>
             </div>
         </nav>
+        {{-- ▲ SELESAI BAGIAN PARTIALS/NAVBAR.BLADE.PHP ▲ --}}
 
 
-        <!-- Hero Section -->
+
+
+        {{-- ▼ MULAI BAGIAN KONTEN UTAMA (YANG AKAN MASUK KE @yield('content')) ▼ --}}
+        {{-- beranda --}}
         <div class="site-blocks-cover"
-            style="background-image: url('{{ asset('pengaduan-masyarakat/images/hero_bg_1.jpg') }}');" data-aos="fade">
+            style="background-image: url('{{ asset('pengaduan-masyarakat/images/blog_2.jpg') }}');" data-aos="fade">
             <div class="container">
                 <div class="row align-items-center justify-content-center text-center">
                     <div class="col-md-10" data-aos="fade-up" data-aos-delay="200">
@@ -69,13 +73,12 @@
                 </div>
             </div>
         </div>
-
-        <!-- About Section -->
+        {{-- tentang kami --}}
         <div class="site-section" id="about-section">
             <div class="container">
                 <div class="row mb-5 align-items-center">
                     <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
-                        <img src="{{ asset('pengaduan-masyarakat/images/about.jpg') }}" alt="Tentang Kami"
+                        <img src="{{ asset('pengaduan-masyarakat/images/about1.jpg') }}" alt="Tentang Kami"
                             class="img-fluid rounded">
                     </div>
                     <div class="col-lg-6 ml-auto" data-aos="fade-left">
@@ -89,8 +92,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Services Section -->
+        {{-- layanan kami --}}
         <div class="site-section bg-light" id="services-section">
             <div class="container">
                 <div class="row mb-5 justify-content-center text-center">
@@ -132,8 +134,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Report Section -->
+        {{-- laporan terkini --}}
         <div class="site-section" id="report-section">
             <div class="container">
                 <div class="row mb-5 justify-content-center text-center">
@@ -146,7 +147,7 @@
                 <div class="row">
                     <div class="col-md-4" data-aos="fade-up">
                         <div class="card border-0 shadow-sm mb-4">
-                            <img src="{{ asset('pengaduan-masyarakat/images/report1.jpg') }}" class="card-img-top"
+                            <img src="{{ asset('pengaduan-masyarakat/images/lampu1.jpg') }}" class="card-img-top"
                                 alt="Laporan 1">
                             <div class="card-body">
                                 <h5 class="card-title">Lampu Jalan Mati</h5>
@@ -158,7 +159,7 @@
 
                     <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                         <div class="card border-0 shadow-sm mb-4">
-                            <img src="{{ asset('pengaduan-masyarakat/images/report2.jpg') }}" class="card-img-top"
+                            <img src="{{ asset('pengaduan-masyarakat/images/sampah1.jpg') }}" class="card-img-top"
                                 alt="Laporan 2">
                             <div class="card-body">
                                 <h5 class="card-title">Sampah Menumpuk</h5>
@@ -170,7 +171,7 @@
 
                     <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                         <div class="card border-0 shadow-sm mb-4">
-                            <img src="{{ asset('pengaduan-masyarakat/images/report3.jpg') }}" class="card-img-top"
+                            <img src="{{ asset('pengaduan-masyarakat/images/pelayanan1.jpg') }}" class="card-img-top"
                                 alt="Laporan 3">
                             <div class="card-body">
                                 <h5 class="card-title">Pelayanan Lambat</h5>
@@ -181,7 +182,6 @@
                     </div>
                 </div>
 
-                <!-- 🔹 Tambahan Form di bawah daftar laporan -->
                 <div class="row justify-content-center mt-5">
                     <div class="col-md-8">
                         <form action="{{ route('laporan.store') }}" method="POST"
@@ -222,9 +222,7 @@
 
             </div>
         </div>
-
-
-        <!-- Contact Section -->
+        {{-- hubungi kami --}}
         <div class="site-section bg-light" id="contact-section">
             <div class="container">
                 <div class="row justify-content-center text-center mb-5">
@@ -254,20 +252,29 @@
                 </div>
             </div>
         </div>
+        {{-- end kontak --}}
+        {{-- ▲ SELESAI BAGIAN KONTEN UTAMA (YANG AKAN MASUK KE @yield('content'))--}}
 
-        <!-- Footer -->
+
+
+
+        {{-- ▼ MULAI BAGIAN PARTIALS/FOOTER.BLADE.PHP ▼ --}}
+
         <footer class="site-footer bg-dark text-white py-5">
             <div class="container text-center">
                 <h3 class="footer-title">Pengaduan & Aspirasi Masyarakat</h3>
                 <p class="mb-3">Platform resmi untuk menyampaikan keluhan dan aspirasi masyarakat demi pelayanan
                     publik yang lebih baik.</p>
-                <p class="small mb-0">&copy; 2025 Pengaduan Masyarakat. Semua Hak Dilindungi.</p>
+                <p class="small mb-0">&copy; 2u025 Pengaduan Masyarakat. Semua Hak Dilindungi.</p>
             </div>
         </footer>
+        {{-- ▲ SELESAI BAGIAN PARTIALS/FOOTER.BLADE.PHP ▲ --}}
+
 
     </div>
 
-    <!-- Scripts -->
+
+    {{-- ▼ MULAI BAGIAN PARTIALS/SCRIPTS.BLADE.PHP ▼ --}}
     <script src="{{ asset('pengaduan-masyarakat/js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('pengaduan-masyarakat/js/jquery-ui.js') }}"></script>
     <script src="{{ asset('pengaduan-masyarakat/js/popper.min.js') }}"></script>
@@ -294,6 +301,8 @@
             });
         </script>
     @endif
+    {{-- end script js --}}
+    {{-- ▲ SELESAI BAGIAN PARTIALS/SCRIPTS.BLADE.PHP ▲ --}}
 
 
 </body>
