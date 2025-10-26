@@ -61,7 +61,7 @@
         {{-- ▼ MULAI BAGIAN KONTEN UTAMA (YANG AKAN MASUK KE @yield('content')) ▼ --}}
         {{-- beranda --}}
         <div class="site-blocks-cover"
-            style="background-image: url('{{ asset('pengaduan-masyarakat/images/blog_2.jpg') }}');" data-aos="fade">
+            style="background-image: url('{{ asset('pengaduan-masyarakat/images/hero_bg_1.jpg') }}');" data-aos="fade">
             <div class="container">
                 <div class="row align-items-center justify-content-center text-center">
                     <div class="col-md-10" data-aos="fade-up" data-aos-delay="200">

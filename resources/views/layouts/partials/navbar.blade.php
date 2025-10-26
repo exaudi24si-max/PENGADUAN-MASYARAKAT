@@ -33,26 +33,25 @@
 
                 {{-- Conditional Auth Menu --}}
                 @auth
-                    {{-- TOMBOL LOGOUT VISIBLE (untuk desktop) --}}
+                    {{-- Tombol Logout (desktop) --}}
                     <li class="nav-item ms-2 d-none d-lg-block">
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
                             <button type="submit" class="btn btn-outline-light btn-sm"
-                                    onclick="return confirm('Yakin ingin logout?')">
+                                onclick="return confirm('Yakin ingin logout?')">
                                 <i class="bi bi-box-arrow-right me-1"></i>Logout
                             </button>
                         </form>
                     </li>
 
-                    {{-- DROPDOWN MENU (untuk semua device) --}}
+                    {{-- Dropdown User Info --}}
                     <li class="nav-item dropdown ms-2">
                         <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle me-2"></i>
                             <span class="d-none d-sm-inline">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            {{-- User Info --}}
                             <li>
                                 <div class="dropdown-item-text">
                                     <div class="fw-bold">{{ Auth::user()->name }}</div>
@@ -60,31 +59,17 @@
                                 </div>
                             </li>
                             <li><hr class="dropdown-divider"></li>
-
-                            {{-- Menu Items --}}
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <i class="bi bi-person me-2"></i>Profil Saya
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <i class="bi bi-list-check me-2"></i>Laporan Saya
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('main') }}">
-                                    <i class="bi bi-plus-circle me-2"></i>Buat Laporan Baru
-                                </a>
-                            </li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil Saya</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-list-check me-2"></i>Laporan Saya</a></li>
+                            <li><a class="dropdown-item" href="{{ route('main') }}"><i class="bi bi-plus-circle me-2"></i>Buat Laporan Baru</a></li>
                             <li><hr class="dropdown-divider"></li>
 
-                            {{-- Logout Form (juga di dropdown untuk mobile) --}}
+                            {{-- Logout di dropdown (mobile) --}}
                             <li class="d-lg-none">
                                 <form method="POST" action="{{ route('logout') }}" class="d-inline w-100">
                                     @csrf
                                     <button type="submit" class="dropdown-item text-danger w-100 text-start"
-                                            onclick="return confirm('Yakin ingin logout?')">
+                                        onclick="return confirm('Yakin ingin logout?')">
                                         <i class="bi bi-box-arrow-right me-2"></i>Logout
                                     </button>
                                 </form>
@@ -92,34 +77,32 @@
                         </ul>
                     </li>
                 @else
-                    {{-- USER BELUM LOGIN - Tampilkan Tombol Login --}}
+                    {{-- Jika belum login --}}
                     <li class="nav-item ms-2">
                         <a href="{{ route('login') }}" class="btn btn-light btn-sm fw-bold">
-                            <i class="bi bi-box-arrow-in-right me-1"></i>
-                            <span class="d-none d-md-inline">Login</span>
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Login
                         </a>
                     </li>
                     <li class="nav-item ms-2">
                         <a href="{{ route('register') }}" class="btn btn-outline-light btn-sm">
-                            <i class="bi bi-person-plus me-1"></i>
-                            <span class="d-none d-md-inline">Daftar</span>
+                            <i class="bi bi-person-plus me-1"></i>Daftar
                         </a>
                     </li>
                 @endauth
             </ul>
         </div>
-    </div>w
+    </div>
 </nav>
 
-{{-- Additional CSS for better appearance --}}
+{{-- Style tambahan --}}
 <style>
-.navbar-nav .nav-link {
-    transition: color 0.3s ease;
-}
-.navbar-nav .nav-link:hover {
-    color: #ffd700 !important;
-}
-.dropdown-item:hover {
-    background-color: #f8f9fa;
-}
+    .navbar-nav .nav-link {
+        transition: color 0.3s ease;
+    }
+    .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+    }
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+    }
 </style>

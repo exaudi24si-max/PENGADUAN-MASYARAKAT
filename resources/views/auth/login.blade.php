@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +21,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-card {
@@ -154,120 +162,145 @@
         }
 
         @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body>
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="login-container">
-                <div class="card login-card">
-                    <div class="card-header text-white text-center">
-                        <i class="bi bi-person-circle login-icon"></i>
-                        <h4 class="mb-0">Login Pengguna</h4>
-                        <p class="mb-0 opacity-75">Sistem Pengaduan & Aspirasi Masyarakat</p>
-                    </div>
-                    <div class="card-body p-4 p-md-5">
-                        @if(session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-container">
+                    <div class="card login-card">
+                        <div class="card-header text-white text-center">
+                            <i class="bi bi-person-circle login-icon"></i>
+                            <h4 class="mb-0">Login Pengguna</h4>
+                            <p class="mb-0 opacity-75">Sistem Pengaduan & Aspirasi Masyarakat</p>
+                        </div>
+                        <div class="card-body p-4 p-md-5">
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
 
-                        @if($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="bi bi-exclamation-triangle me-2"></i>
-                                <ul class="mb-0">
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
 
-                        <form method="POST" action="{{ route('login') }}" id="loginForm">
-                            @csrf
+                            <form method="POST" action="{{ route('login') }}" id="loginForm">
+                                @csrf
 
-                            <div class="mb-4 floating-label">
-                                <i class="bi bi-envelope input-icon"></i>
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                       id="email" name="email" value="{{ old('email') }}"
-                                       placeholder="Masukkan email Anda" required>
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
+                                <div class="mb-4 floating-label">
+                                    <i class="bi bi-envelope input-icon"></i>
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" name="email" value="{{ old('email') }}"
+                                        placeholder="Masukkan email Anda" required>
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
-                            <div class="mb-4 floating-label">
-                                <i class="bi bi-lock input-icon"></i>
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                       id="password" name="password"
-                                       placeholder="Masukkan password" required>
-                                @error('password')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
+                                <div class="mb-4 floating-label">
+                                    <i class="bi bi-lock input-icon"></i>
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" name="password" placeholder="Masukkan password" required>
+                                    @error('password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
-                            <div class="mb-4 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                <label class="form-check-label" for="remember">Ingat saya</label>
-                            </div>
+                                <div class="mb-4 form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">Ingat saya</label>
+                                </div>
 
-                            <button type="submit" class="btn login-btn w-100 py-3 fw-bold" id="loginButton">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>Masuk
-                            </button>
-                        </form>
-                    </div>
-                    <div class="card-footer text-center py-3 bg-transparent">
-                        <small class="text-muted">
-                            Belum punya akun?
-                            <a href="{{ route('register') }}" class="register-link">Daftar di sini</a>
-                        </small>
+                                <button type="submit" class="btn login-btn w-100 py-3 fw-bold" id="loginButton">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Masuk
+                                </button>
+                            </form>
+                        </div>
+                        <div class="card-footer text-center py-3 bg-transparent">
+                            <small class="text-muted">
+                                Belum punya akun?
+                                <a href="{{ route('register') }}" class="register-link">Daftar di sini</a>
+                            </small>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Loading animation untuk button
-    document.getElementById('loginForm').addEventListener('submit', function() {
-        const button = document.getElementById('loginButton');
-        button.classList.add('btn-loading');
-        button.disabled = true;
-    });
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Loading animation untuk button
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            const button = document.getElementById('loginButton');
+            button.classList.add('btn-loading');
+            button.disabled = true;
 
-    // Floating label effect
-    const inputs = document.querySelectorAll('.form-control');
-    inputs.forEach(input => {
-        input.addEventListener('focus', function() {
-            this.parentElement.classList.add('focused');
+
+
+            @if (session('success'))
+                <
+                div class = "alert alert-success alert-dismissible fade show"
+                role = "alert" >
+                    {{ session('success') }} <
+                    button type = "button"
+                class = "btn-close"
+                data - bs - dismiss = "alert"
+                aria - label = "Close" > < /button> <
+                    /div>
+            @endif
+
+
         });
 
-        input.addEventListener('blur', function() {
-            if (this.value === '') {
-                this.parentElement.classList.remove('focused');
+        // Floating label effect
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+
+            // Check initial value
+            if (input.value !== '') {
+                input.parentElement.classList.add('focused');
             }
-        });
 
-        // Check initial value
-        if (input.value !== '') {
-            input.parentElement.classList.add('focused');
-        }
-    });
-</script>
+        });
+    </script>
 </body>
+
 </html>

@@ -5,10 +5,10 @@
 </head>
 <body>
     @include('layouts.partials.navbar')
-
     <main>
         @yield('content')
     </main>
+    @include('layouts.partials.content')
 
     @include('layouts.partials.footer')
     @include('layouts.partials.scripts')
