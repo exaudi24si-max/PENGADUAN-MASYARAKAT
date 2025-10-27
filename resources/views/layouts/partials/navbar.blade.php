@@ -1,3 +1,10 @@
+<!-- 🐛 DEBUG: Tambahkan ini di bagian paling atas untuk cek status login -->
+<div style="position: fixed; top: 10px; left: 10px; background: #dc3545; color: white; padding: 10px; z-index: 9999; border-radius: 5px; font-size: 12px; font-weight: bold;">
+    🔍 DEBUG STATUS:<br>
+    Login: {{ Auth::check() ? 'YES' : 'NO' }}<br>
+    User: {{ Auth::user()->name ?? 'TIDAK ADA' }}
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
     <div class="container">
         {{-- Brand Logo --}}
@@ -33,15 +40,19 @@
 
                 {{-- Conditional Auth Menu --}}
                 @auth
-                    {{-- Tombol Logout (desktop) --}}
+                    <!-- ✅ TAMBAHAN: Nama user di desktop -->
+                    <li class="nav-item d-none d-lg-block">
+                        <span class="navbar-text text-white me-3">
+                            <i class="bi bi-person me-1"></i>{{ Auth::user()->name }}
+                        </span>
+                    </li>
+
+                    <!-- ✅ TAMBAHAN: Tombol Logout (desktop) -->
                     <li class="nav-item ms-2 d-none d-lg-block">
-                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-light btn-sm"
-                                onclick="return confirm('Yakin ingin logout?')">
-                                <i class="bi bi-box-arrow-right me-1"></i>Logout
-                            </button>
-                        </form>
+                        <a href="{{ route('logout.get') }}" class="btn btn-outline-light btn-sm"
+                            onclick="return confirm('Yakin ingin logout?')">
+                            <i class="bi bi-box-arrow-right me-1"></i>Logout
+                        </a>
                     </li>
 
                     {{-- Dropdown User Info --}}
@@ -64,15 +75,12 @@
                             <li><a class="dropdown-item" href="{{ route('main') }}"><i class="bi bi-plus-circle me-2"></i>Buat Laporan Baru</a></li>
                             <li><hr class="dropdown-divider"></li>
 
-                            {{-- Logout di dropdown (mobile) --}}
+                            <!-- ✅ TAMBAHAN: Logout di dropdown (mobile) -->
                             <li class="d-lg-none">
-                                <form method="POST" action="{{ route('logout') }}" class="d-inline w-100">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger w-100 text-start"
-                                        onclick="return confirm('Yakin ingin logout?')">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
-                                    </button>
-                                </form>
+                                <a href="{{ route('logout.get') }}" class="dropdown-item text-danger"
+                                    onclick="return confirm('Yakin ingin logout?')">
+                                    <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                </a>
                             </li>
                         </ul>
                     </li>
