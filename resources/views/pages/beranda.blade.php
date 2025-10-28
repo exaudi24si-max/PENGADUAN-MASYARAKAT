@@ -2,14 +2,12 @@
 <html lang="id">
 
 <head>
-
-    {{-- ▼ MULAI BAGIAN PARTIALS/HEAD.BLADE.PHP ▼ --}}
     <title>Pengaduan & Aspirasi Masyarakat</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
+    {{-- HAPUS DUPLIKAT - hanya satu bootstrap icons --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/fonts/icomoon/style.css') }}">
@@ -24,16 +22,94 @@
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/css/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('pengaduan-masyarakat/css/style.css') }}">
 
-    {{-- ini link dari navbar --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    {{-- ▲ SELESAI BAGIAN PARTIALS/HEAD.BLADE.PHP ▲ --}}
+    {{-- TAMBAHKIN CSS FLOATING WHATSAPP --}}
+    <style>
+        /* Floating WhatsApp Button */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+        }
 
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-btn i {
+            font-size: 28px;
+            color: white;
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* WhatsApp Tooltip */
+        .whatsapp-tooltip {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -5px;
+            transform: translateY(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent transparent #333;
+        }
+
+        .whatsapp-btn:hover + .whatsapp-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     <div class="site-wrap" id="home-section">
 
-        {{-- ▼ MULAI BAGIAN PARTIALS/NAVBAR.BLADE.PHP ▼ --}}
+        {{-- NAVBAR --}}
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
             <div class="container">
                 <a class="navbar-brand fw-bold text-white" href="#home-section">
@@ -55,12 +131,8 @@
                 </div>
             </div>
         </nav>
-        {{-- ▲ SELESAI BAGIAN PARTIALS/NAVBAR.BLADE.PHP ▲ --}}
 
-
-
-
-        {{-- ▼ MULAI BAGIAN KONTEN UTAMA (YANG AKAN MASUK KE @yield('content')) ▼ --}}
+        {{-- KONTEN UTAMA --}}
         {{-- beranda --}}
         <div class="site-blocks-cover"
             style="background-image: url('{{ asset('pengaduan-masyarakat/images/hero_bg_1.jpg') }}');" data-aos="fade">
@@ -75,6 +147,7 @@
                 </div>
             </div>
         </div>
+
         {{-- tentang kami --}}
         <div class="site-section" id="about-section">
             <div class="container">
@@ -94,6 +167,7 @@
                 </div>
             </div>
         </div>
+
         {{-- layanan kami --}}
         <div class="site-section bg-light" id="services-section">
             <div class="container">
@@ -136,6 +210,7 @@
                 </div>
             </div>
         </div>
+
         {{-- laporan terkini --}}
         <div class="site-section" id="report-section">
             <div class="container">
@@ -218,12 +293,11 @@
                                 <button type="submit" class="btn btn-primary btn-lg">Kirim Laporan</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
-
             </div>
         </div>
+
         {{-- hubungi kami --}}
         <div class="site-section bg-light" id="contact-section">
             <div class="container">
@@ -254,94 +328,65 @@
                 </div>
             </div>
         </div>
-        {{-- end kontak --}}
-        {{-- ▲ SELESAI BAGIAN KONTEN UTAMA (YANG AKAN MASUK KE @yield('content'))--}}
 
-
-
-
-        {{-- ▼ MULAI BAGIAN PARTIALS/FOOTER.BLADE.PHP ▼ --}}
-
+        {{-- FOOTER --}}
         <footer class="site-footer bg-dark text-white py-5">
             <div class="container text-center">
                 <h3 class="footer-title">Pengaduan & Aspirasi Masyarakat</h3>
                 <p class="mb-3">Platform resmi untuk menyampaikan keluhan dan aspirasi masyarakat demi pelayanan
                     publik yang lebih baik.</p>
-                <p class="small mb-0">&copy; 2u025 Pengaduan Masyarakat. Semua Hak Dilindungi.</p>
+                <p class="small mb-0">&copy; 2024 Pengaduan Masyarakat. Semua Hak Dilindungi.</p>
             </div>
         </footer>
-        {{-- ▲ SELESAI BAGIAN PARTIALS/FOOTER.BLADE.PHP ▲ --}}
-
-
     </div>
-    {{-- WA --}}
-    {{-- Floating WhatsApp dengan Modal --}}
-<div class="floating-whatsapp">
-    <button class="whatsapp-btn" onclick="openWhatsAppModal()">
-        <i class="bi bi-whatsapp"></i>
-    </button>
-    <div class="whatsapp-tooltip">Hubungi via WhatsApp</div>
-</div>
 
-<!-- WhatsApp Modal -->
-<div class="modal fade" id="whatsappModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title">
-                    <i class="bi bi-whatsapp me-2"></i>Hubungi via WhatsApp
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Pilih Tujuan:</label>
-                    <select class="form-select" id="whatsappOption">
-                        <option value="6281234567890">Customer Service</option>
-                        <option value="6289876543210">Teknisi</option>
-                        <option value="6281122334455">Admin Pengaduan</option>
-                    </select>
+    {{-- FLOATING WHATSAPP --}}
+    <div class="floating-whatsapp">
+        <button class="whatsapp-btn" onclick="openWhatsAppModal()">
+            <i class="bi bi-whatsapp"></i>
+        </button>
+        <div class="whatsapp-tooltip">Hubungi via WhatsApp</div>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="modal fade" id="whatsappModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-whatsapp me-2"></i>Hubungi via WhatsApp
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Pesan Default:</label>
-                    <textarea class="form-control" id="whatsappMessage" rows="3">Halo, saya ingin melaporkan sesuatu melalui sistem pengaduan masyarakat.</textarea>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Pilih Tujuan:</label>
+                        <select class="form-select" id="whatsappOption">
+                            {{-- GANTI NOMOR DI SINI --}}
+                            <option value="6281234567890">Customer Service</option>
+                            <option value="6289876543210">Teknisi</option>
+                            <option value="6281122334455">Admin Pengaduan</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Pesan Default:</label>
+                        <textarea class="form-control" id="whatsappMessage" rows="3">Halo, saya ingin melaporkan sesuatu melalui sistem pengaduan masyarakat.</textarea>
+                    </div>
+                    <div class="form-text">
+                        Klik tombol di bawah akan membuka WhatsApp dengan pesan yang telah disiapkan.
+                    </div>
                 </div>
-                <div class="form-text">
-                    Klik tombol di bawah akan membuka WhatsApp dengan pesan yang telah disiapkan.
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" onclick="redirectToWhatsApp()">
+                        <i class="bi bi-whatsapp me-2"></i>Buka WhatsApp
+                    </button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-success" onclick="redirectToWhatsApp()">
-                    <i class="bi bi-whatsapp me-2"></i>Buka WhatsApp
-                </button>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-function openWhatsAppModal() {
-    const modal = new bootstrap.Modal(document.getElementById('whatsappModal'));
-    modal.show();
-}
-
-function redirectToWhatsApp() {
-    const phoneNumber = document.getElementById('whatsappOption').value;
-    const message = document.getElementById('whatsappMessage').value;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-    window.open(whatsappUrl, '_blank');
-
-    // Tutup modal
-    const modal = bootstrap.Modal.getInstance(document.getElementById('whatsappModal'));
-    modal.hide();
-}
-</script>
-
-
-    {{-- ▼ MULAI BAGIAN PARTIALS/SCRIPTS.BLADE.PHP ▼ --}}
+    {{-- SCRIPTS --}}
     <script src="{{ asset('pengaduan-masyarakat/js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('pengaduan-masyarakat/js/jquery-ui.js') }}"></script>
     <script src="{{ asset('pengaduan-masyarakat/js/popper.min.js') }}"></script>
@@ -351,13 +396,30 @@ function redirectToWhatsApp() {
     <script src="{{ asset('pengaduan-masyarakat/js/jquery.easing.1.3.js') }}"></script>
     <script src="{{ asset('pengaduan-masyarakat/js/aos.js') }}"></script>
     <script src="{{ asset('pengaduan-masyarakat/js/main.js') }}"></script>
-
-    <script src="{{ asset('pengaduan-masyarakat/js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('pengaduan-masyarakat/js/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    @if (session('success'))
-        <script>
+    {{-- HAPUS DUPLIKAT JQUERY & BOOTSTRAP --}}
+
+    <script>
+        function openWhatsAppModal() {
+            const modal = new bootstrap.Modal(document.getElementById('whatsappModal'));
+            modal.show();
+        }
+
+        function redirectToWhatsApp() {
+            const phoneNumber = document.getElementById('whatsappOption').value;
+            const message = document.getElementById('whatsappMessage').value;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
+
+            // Tutup modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('whatsappModal'));
+            modal.hide();
+        }
+
+        @if (session('success'))
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
@@ -366,12 +428,8 @@ function redirectToWhatsApp() {
                 timer: 3000,
                 timerProgressBar: true
             });
-        </script>
-    @endif
-    {{-- end script js --}}
-    {{-- ▲ SELESAI BAGIAN PARTIALS/SCRIPTS.BLADE.PHP ▲ --}}
-
+        @endif
+    </script>
 
 </body>
-
 </html>
