@@ -1,9 +1,5 @@
-<!-- 🐛 DEBUG: Tambahkan ini di bagian paling atas untuk cek status login -->
-<div style="position: fixed; top: 10px; left: 10px; background: #dc3545; color: white; padding: 10px; z-index: 9999; border-radius: 5px; font-size: 12px; font-weight: bold;">
-    🔍 DEBUG STATUS:<br>
-    Login: {{ Auth::check() ? 'YES' : 'NO' }}<br>
-    User: {{ Auth::user()->name ?? 'TIDAK ADA' }}
-</div>
+@include('layouts.guest.navbar')
+@section('content')
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
     <div class="container">
@@ -114,3 +110,6 @@
         background-color: #f8f9fa;
     }
 </style>
+
+
+@endsection

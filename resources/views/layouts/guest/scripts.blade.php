@@ -1,4 +1,4 @@
-@extends('layouts.partials.scripts')
+@extends('layouts.guest.scripts')
 @section('content')
 
 {{-- ================================================= --}}

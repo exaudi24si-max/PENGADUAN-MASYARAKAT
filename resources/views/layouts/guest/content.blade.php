@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@include('layouts.guest.content')
 @section('content')
 
 {{-- ▼ MULAI BAGIAN KONTEN UTAMA (YANG AKAN MASUK KE @yield('content')) ▼ --}}
@@ -197,3 +197,5 @@
 
 
 @endsection
+
+

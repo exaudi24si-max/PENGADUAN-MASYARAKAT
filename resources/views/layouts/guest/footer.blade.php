@@ -1,4 +1,4 @@
-@extends('layouts.partials.footer')
+@extends('layouts.guest.footer')
 @section('content')
 {{-- =============================================== --}}
 {{-- ▼ MULAI BAGIAN PARTIALS/FOOTER.BLADE.PHP ▼ --}}

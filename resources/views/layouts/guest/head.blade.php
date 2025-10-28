@@ -1,4 +1,4 @@
-@extends('layouts.partials.head')
+@extends('layouts.guest.head')
 @section('content')
 
     {{-- ============================================= --}}
