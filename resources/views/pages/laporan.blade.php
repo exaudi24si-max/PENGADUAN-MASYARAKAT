@@ -67,7 +67,7 @@
                             <div class="form-group mb-3">
                                 <select name="kategori_id" class="form-control" required>
                                     <option value="">-- Pilih Kategori --</option>
-                                    <option value="1">Fasilitas Umum</option>
+                                    <option value="1">Pengaduan Warga</option>
                                     <option value="2">Kebersihan</option>
                                     <option value="3">Pelayanan Publik</option>
                                     <option value="4">Lainnya</option>
