@@ -27,6 +27,10 @@ class GuestController extends Controller
     {
         return view('pages.kontak');
     }
+     public function pengaduan()
+    {
+        return view('pages.pengaduan');
+    }
     // public function index()
     // {
     //     return view('index');

@@ -3,16 +3,26 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\WargaController;
 use App\Http\Controllers\LaporanController;
 
-
+// ==================== PUBLIC ROUTES ====================
 Route::get('/', [GuestController::class, 'beranda'])->name('beranda');
 Route::get('/tentang', [GuestController::class, 'tentang'])->name('tentang');
 Route::get('/laporan', [GuestController::class, 'laporan'])->name('laporan');
 Route::get('/layanan', [GuestController::class, 'layanan'])->name('layanan');
 Route::get('/kontak', [GuestController::class, 'kontak'])->name('kontak');
+Route::get('/pengaduan', [GuestController::class, 'pengaduan'])->name('pengaduan');
+
+
+// Route::get('/beranda', [GuestController::class, 'beranda'])->name('beranda');
+
 Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
+// Welcome page (opsional)
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -30,3 +40,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/main', [GuestController::class, 'main'])->name('main');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+Route::resource('warga', WargaController::class);

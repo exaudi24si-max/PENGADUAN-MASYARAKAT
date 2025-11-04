@@ -29,7 +29,10 @@
                     <a class="nav-link text-white" href="{{ route('laporan') }}#report-section">Laporan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('kontak') }}#contact-section">Kontak</a>
+                    <a class="nav-link text-white" href="{{ route('warga.index') }}#contact-section">Warga</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('pengaduan') }}#contact-section">Pengaduan</a>
                 </li>
 
                 {{-- Conditional Auth Menu --}}
