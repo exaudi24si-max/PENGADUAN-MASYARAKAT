@@ -2,64 +2,6 @@
 
 @section('content')
 
-        {{-- KONTEN UTAMA --}}
-        {{-- beranda --}}
-        <div class="site-blocks-cover"
-            style="background-image: url('{{ asset('pengaduan-masyarakat/images/hero_bg_1.jpg') }}');" data-aos="fade">
-            <div class="container">
-                <div class="row align-items-center justify-content-center text-center">
-                    <div class="col-md-10" data-aos="fade-up" data-aos-delay="200">
-                        <h1 class="text-white mb-4">Sistem Pengaduan & Aspirasi Masyarakat</h1>
-                        <p class="lead text-white mb-5">Sampaikan laporan, keluhan, dan aspirasi Anda demi pelayanan
-                            publik yang lebih baik.</p>
-                        <a href="#report-section" class="btn btn-primary btn-lg smoothscroll">Buat Laporan Sekarang</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- layanan kami --}}
-        <div class="site-section bg-light" id="services-section">
-            <div class="container">
-                <div class="row mb-5 justify-content-center text-center">
-                    <div class="col-7 text-center mb-5">
-                        <h2 class="section-title">Layanan Kami</h2>
-                        <p>Kami menyediakan berbagai fitur untuk memudahkan masyarakat menyampaikan aspirasi dan
-                            pengaduan.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-lg-3 text-center" data-aos="fade-up">
-                        <div class="service-box">
-                            <span class="flaticon-idea display-4 text-primary mb-4"></span>
-                            <h4>Pengaduan Masyarakat</h4>
-                            <p>Sampaikan keluhan Anda terkait pelayanan publik secara langsung.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-box">
-                            <span class="flaticon-feedback display-4 text-primary mb-4"></span>
-                            <h4>Aspirasi Warga</h4>
-                            <p>Berikan ide atau saran untuk kemajuan lingkungan dan pelayanan publik.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="200">
-                        <div class="service-box">
-                            <span class="flaticon-analysis display-4 text-primary mb-4"></span>
-                            <h4>Tindak Lanjut Cepat</h4>
-                            <p>Setiap laporan akan diteruskan dan dipantau hingga selesai.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="300">
-                        <div class="service-box">
-                            <span class="flaticon-report display-4 text-primary mb-4"></span>
-                            <h4>Monitoring Laporan</h4>
-                            <p>Pantau status laporan Anda secara real-time.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {{-- laporan terkini --}}
         <div class="site-section" id="report-section">
@@ -148,34 +90,5 @@
             </div>
         </div>
 
-        {{-- hubungi kami --}}
-        <div class="site-section bg-light" id="contact-section">
-            <div class="container">
-                <div class="row justify-content-center text-center mb-5">
-                    <div class="col-md-8">
-                        <h2 class="section-title">Hubungi Kami</h2>
-                        <p>Sampaikan pertanyaan, saran, atau kendala Anda melalui form di bawah ini.</p>
-                    </div>
-                </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <form action="#" method="post" class="p-5 bg-white shadow-sm rounded">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Nama Lengkap">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Alamat Email">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" cols="30" rows="5" placeholder="Isi Laporan / Pesan Anda"></textarea>
-                            </div>
-                            <div class="form-group text-center">
-                                <input type="submit" class="btn btn-primary btn-lg" value="Kirim Laporan">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 @endsection

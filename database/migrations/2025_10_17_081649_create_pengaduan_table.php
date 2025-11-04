@@ -11,6 +11,9 @@ return new class extends Migration
         Schema::create('pengaduan', function (Blueprint $table) {
             $table->id('pengaduan_id');
             $table->string('nomor_tiket')->unique();
+            $table->string('nama_pelapor', 100);              // BARU
+            $table->string('email_pelapor', 100)->nullable(); // BARU
+            $table->string('no_telepon', 15)->nullable();     // BARU
             $table->unsignedBigInteger('kategori_id');
             $table->string('judul', 255);
             $table->text('deskripsi');
@@ -27,6 +30,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('pengaduan');
+        Schema::table('pengaduan', function (Blueprint $table) {
+            $table->dropColumn(['nama_pelapor', 'email_pelapor', 'no_telepon']);
+        });
     }
 };

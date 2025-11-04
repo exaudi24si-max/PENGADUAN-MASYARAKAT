@@ -1,24 +1,27 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuestController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LaporanController;
 
-// ==================== PUBLIC ROUTES ====================
+
 Route::get('/', [GuestController::class, 'beranda'])->name('beranda');
-Route::get('/beranda', [GuestController::class, 'beranda'])->name('beranda');
-Route::post('/laporan/store', [GuestController::class, 'store'])->name('laporan.store');
+Route::get('/tentang', [GuestController::class, 'tentang'])->name('tentang');
+Route::get('/laporan', [GuestController::class, 'laporan'])->name('laporan');
+Route::get('/layanan', [GuestController::class, 'layanan'])->name('layanan');
+Route::get('/kontak', [GuestController::class, 'kontak'])->name('kontak');
+Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
-// Welcome page (opsional)
-Route::get('/welcome', function () {
-    return view('welcome');
-});
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
+
+// routes pelanggan
+Route::resource('pelanggan', PelangganController::class);
 
 // ==================== PROTECTED ROUTES ====================
 Route::middleware(['auth'])->group(function () {

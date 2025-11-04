@@ -1,5 +1,3 @@
-@include('layouts.guest.navbar')
-@section('content')
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
     <div class="container">
@@ -19,19 +17,19 @@
             <ul class="navbar-nav align-items-center">
                 {{-- Menu Navigasi --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}#home-section">Beranda</a>
+                    <a class="nav-link text-white" href="{{ route('beranda') }}#home-section">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}#about-section">Tentang</a>
+                    <a class="nav-link text-white" href="{{ route('tentang') }}#about-section">Tentang</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}#services-section">Layanan</a>
+                    <a class="nav-link text-white" href="{{ route('layanan') }}#services-section">Layanan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}#report-section">Laporan</a>
+                    <a class="nav-link text-white" href="{{ route('laporan') }}#report-section">Laporan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}#contact-section">Kontak</a>
+                    <a class="nav-link text-white" href="{{ route('kontak') }}#contact-section">Kontak</a>
                 </li>
 
                 {{-- Conditional Auth Menu --}}
@@ -110,6 +108,3 @@
         background-color: #f8f9fa;
     }
 </style>
-
-
-@endsection
