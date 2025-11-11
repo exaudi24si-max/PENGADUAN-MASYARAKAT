@@ -12,7 +12,7 @@ class AuthController extends Controller
     {
         // Auto-create user default saat membuka halaman login
         $this->createDefaultUser();
-        return view('auth.login');
+        return view('pages.auth.login');
     }
 
     public function login(Request $request)
@@ -39,7 +39,7 @@ class AuthController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('pages.auth.register');
     }
 
     public function register(Request $request)

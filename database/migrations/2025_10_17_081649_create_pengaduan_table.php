@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('pengaduan', function (Blueprint $table) {
             $table->id('pengaduan_id');
             $table->string('nomor_tiket')->unique();
-            $table->string('nama_pelapor', 100);              // BARU
-            $table->string('email_pelapor', 100)->nullable(); // BARU
-            $table->string('no_telepon', 15)->nullable();     // BARU
+            $table->string('nama_pelapor', 100);              
+            $table->string('email_pelapor', 100)->nullable();
+            $table->string('no_telepon', 15)->nullable();
             $table->unsignedBigInteger('kategori_id');
             $table->string('judul', 255);
             $table->text('deskripsi');

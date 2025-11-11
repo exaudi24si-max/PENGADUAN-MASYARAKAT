@@ -1,5 +1,5 @@
-@extends('layouts.guest.app')
+{{-- @extends('layouts.guest.app')
 
 @section('content')
 
-@endsection
+@endsection --}}

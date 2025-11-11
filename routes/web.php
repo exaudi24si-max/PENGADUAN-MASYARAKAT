@@ -5,24 +5,25 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\UserController;
 
 // ==================== PUBLIC ROUTES ====================
 Route::get('/', [GuestController::class, 'beranda'])->name('beranda');
 Route::get('/tentang', [GuestController::class, 'tentang'])->name('tentang');
-Route::get('/laporan', [GuestController::class, 'laporan'])->name('laporan');
 Route::get('/layanan', [GuestController::class, 'layanan'])->name('layanan');
-Route::get('/kontak', [GuestController::class, 'kontak'])->name('kontak');
-Route::get('/pengaduan', [GuestController::class, 'pengaduan'])->name('pengaduan');
+
+// warga
+Route::resource('warga', WargaController::class);
+
+// user
+Route::resource('users', UserController::class);
+
+// laporan
+Route::resource('laporans', LaporanController::class);
 
 
-// Route::get('/beranda', [GuestController::class, 'beranda'])->name('beranda');
 
-Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
-// Welcome page (opsional)
-Route::get('/welcome', function () {
-    return view('welcome');
-});
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -30,8 +31,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-// routes pelanggan
-Route::resource('pelanggan', PelangganController::class);
+// // routes pelanggan
+// Route::resource('pelanggan', PelangganController::class);
 
 // ==================== PROTECTED ROUTES ====================
 Route::middleware(['auth'])->group(function () {
@@ -41,4 +42,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::resource('warga', WargaController::class);
+

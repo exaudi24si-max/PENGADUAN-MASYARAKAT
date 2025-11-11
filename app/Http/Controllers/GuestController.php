@@ -1,45 +1,48 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class GuestController extends Controller
 {
-    public function beranda() // ✅ METHOD NAME: beranda
+    /**
+     * Halaman Beranda
+     */
+    public function beranda()
     {
-        return view('pages.beranda'); // ✅ VIEW NAME: 'beranda' (bukan Deranda)
+        return view('pages.beranda');
     }
 
-    public function tentang() // ✅ METHOD NAME: beranda
+    /**
+     * Halaman Tentang
+     */
+    public function tentang()
     {
         return view('pages.tentang');
     }
-    public function laporan()
-    {
-        return view('pages.laporan');
-    }
+
+    /**
+     * Halaman Layanan
+     */
     public function layanan()
     {
         return view('pages.layanan');
     }
-    public function kontak()
+
+    /**
+     * Halaman Dashboard (Protected - butuh login)
+     */
+    public function index()
     {
-        return view('pages.kontak');
+        return view('pages.beranda');
     }
-     public function pengaduan()
+
+    /**
+     * Halaman Main (Protected - butuh login)
+     */
+    public function main()
     {
-        return view('pages.pengaduan');
+        return view('pages.main');
     }
-    // public function index()
-    // {
-    //     return view('index');
-    // }
-
-    // public function main()
-    // {
-    //     return view('main');
-    // }
-
-
 }
