@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="row justify-content-center text-center mb-5">
                     <div class="col-md-8">
-                        <h2 class="section-title">Hubungi Kami</h2>
+                        <h2 class="section-title">ini halaman Hubungi Kami</h2>
                         <p>Sampaikan pertanyaan, saran, atau kendala Anda melalui form di bawah ini.</p>
                     </div>
                 </div>
