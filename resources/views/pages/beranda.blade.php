@@ -63,8 +63,6 @@
                         <i class="fas fa-users text-primary"></i>
                         <span>Komunitas Aktif</span>
                     </div>
-                    <img src="{{ asset('pengaduan-masyarakat/images/hero_illustration.png') }}" alt="Hero Illustration" class="img-fluid">
-                </div>
             </div>
         </div>
     </div>

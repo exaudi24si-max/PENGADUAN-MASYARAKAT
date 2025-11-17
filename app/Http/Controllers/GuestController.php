@@ -12,6 +12,7 @@ class GuestController extends Controller
     public function beranda()
     {
         return view('pages.beranda');
+
     }
 
     /**
