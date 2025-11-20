@@ -12,10 +12,40 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('pages.user.index', compact('users'));
+        // ===============================
+        // PAGINATION, SEARCH & FILTER DI SINI
+        // ===============================
+        $query = User::query();
+
+        // SEARCH - Pencarian berdasarkan name, email
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // FILTER Role
+        if ($request->has('role') && !empty($request->role)) {
+            $query->where('role', $request->role);
+        }
+
+        // Sorting default by created_at desc
+        $query->orderBy('created_at', 'desc');
+
+        // PAGINATION - 12 data per halaman untuk tampilan grid
+        $users = $query->paginate(12);
+
+        // Data untuk dropdown filter role
+        $roleList = User::select('role')->distinct()->pluck('role');
+        // ===============================
+        // END PAGINATION & FILTER
+        // ===============================
+
+        return view('pages.user.index', compact('users', 'roleList'));
     }
 
     /**

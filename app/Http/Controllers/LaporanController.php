@@ -12,15 +12,48 @@ class LaporanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $laporans = DB::table('pengaduan')
+        $query = DB::table('pengaduan')
             ->join('kategori_pengaduan', 'pengaduan.kategori_id', '=', 'kategori_pengaduan.kategori_id')
-            ->select('pengaduan.*', 'kategori_pengaduan.nama as kategori_nama')
-            ->orderBy('pengaduan.created_at', 'desc')
-            ->get();
+            ->select('pengaduan.*', 'kategori_pengaduan.nama as kategori_nama');
 
-        return view('pages.laporan.index', compact('laporans'));
+        // ✅ SEARCH - Pencarian berdasarkan keyword
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('pengaduan.judul', 'LIKE', "%{$search}%")
+                  ->orWhere('pengaduan.deskripsi', 'LIKE', "%{$search}%")
+                  ->orWhere('pengaduan.nomor_tiket', 'LIKE', "%{$search}%")
+                  ->orWhere('pengaduan.nama_pelapor', 'LIKE', "%{$search}%")
+                  ->orWhere('kategori_pengaduan.nama', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // ✅ FILTER - Filter berdasarkan status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('pengaduan.status', $request->status);
+        }
+
+        // ✅ FILTER - Filter berdasarkan kategori
+        if ($request->has('kategori') && $request->kategori != '') {
+            $query->where('pengaduan.kategori_id', $request->kategori);
+        }
+
+        // ✅ SORTING - Urutkan data
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+
+        $query->orderBy("pengaduan.{$sortBy}", $sortOrder);
+
+        // ✅ PAGINATION - Bagi data per halaman
+        $laporans = $query->paginate(12)->withQueryString();
+
+        // Data untuk dropdown filter
+        $kategories = DB::table('kategori_pengaduan')->get();
+        $statuses = ['baru', 'proses', 'selesai', 'ditolak'];
+
+        return view('pages.laporan.index', compact('laporans', 'kategories', 'statuses'));
     }
 
     /**

@@ -20,15 +20,58 @@
                 </div>
             </div>
 
+            {{-- SEARCH & FILTER FORM --}}
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="GET" action="{{ route('users.index') }}">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="search" class="form-label">Pencarian</label>
+                                        <input type="text" name="search" id="search" class="form-control"
+                                               value="{{ request('search') }}" placeholder="Cari nama atau email...">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="role" class="form-label">Role</label>
+                                        <select name="role" id="role" class="form-control">
+                                            <option value="">Semua Role</option>
+                                            @foreach($roleList as $role)
+                                                <option value="{{ $role }}"
+                                                    {{ request('role') == $role ? 'selected' : '' }}>
+                                                    {{ ucfirst($role) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">&nbsp;</label>
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-search me-1"></i> Filter
+                                            </button>
+                                            <a href="{{ route('users.index') }}" class="btn btn-secondary">
+                                                <i class="fas fa-refresh me-1"></i> Reset
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
-                {{-- Data dari database --}}
+                {{-- Data dari database menggunakan pagination --}}
                 @foreach ($users as $user)
                     <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body text-center">
                                 {{-- Avatar/Icon --}}
                                 <div class="mb-3">
-                                    <div class="avatar-circle {{ $user->role == 'admin' ? 'bg-danger' : ($user->role == 'staff' ? 'bg-warning' : 'bg-primary') }} mx-auto">
+                                    <div
+                                        class="avatar-circle {{ $user->role == 'admin' ? 'bg-danger' : ($user->role == 'staff' ? 'bg-warning' : 'bg-primary') }} mx-auto">
                                         <i class="fas fa-user text-white"></i>
                                     </div>
                                 </div>
@@ -43,7 +86,8 @@
 
                                     <div class="info-item mb-2">
                                         <i class="fas fa-user-tag text-muted me-2"></i>
-                                        <span class="badge bg-{{ $user->role == 'admin' ? 'danger' : ($user->role == 'staff' ? 'warning' : 'primary') }}">
+                                        <span
+                                            class="badge bg-{{ $user->role == 'admin' ? 'danger' : ($user->role == 'staff' ? 'warning' : 'primary') }}">
                                             {{ ucfirst($user->role) }}
                                         </span>
                                     </div>
@@ -67,11 +111,12 @@
 
                                     {{-- Button Delete --}}
                                     @if ($user->id !== auth()->id())
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                            class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </button>
                                         </form>
@@ -98,13 +143,29 @@
                 @endif
             </div>
 
-            {{-- Info jumlah data --}}
+            {{-- =============================== --}}
+            {{-- PAGINATION BOOTSTRAP 5 --}}
+            {{-- =============================== --}}
             @if ($users->count() > 0)
                 <div class="row justify-content-center mt-5">
                     <div class="col-md-8">
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-3">
+                                {{ $users->links('pagination::bootstrap-5') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Info jumlah data --}}
+            @if ($users->count() > 0)
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-8">
                         <div class="alert alert-info text-center">
                             <i class="fas fa-info-circle me-2"></i>
-                            Menampilkan <strong>{{ $users->count() }}</strong> user
+                            Menampilkan <strong>{{ $users->firstItem() }} - {{ $users->lastItem() }}</strong>
+                            dari <strong>{{ $users->total() }}</strong> user
                         </div>
                     </div>
                 </div>

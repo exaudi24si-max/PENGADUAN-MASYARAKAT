@@ -9,10 +9,48 @@ class WargaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $wargas = Warga::orderBy('created_at', 'desc')->get();
-        return view('pages.warga.index', compact('wargas'));
+        // ===============================
+        // PAGINATION, SEARCH & FILTER DI SINI
+        // ===============================
+        $query = Warga::query();
+
+        // SEARCH - Pencarian berdasarkan nama, email, No_Hp, pekerjaan
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('No_Hp', 'like', "%{$search}%")
+                  ->orWhere('pekerjaan', 'like', "%{$search}%")
+                  ->orWhere('agama', 'like', "%{$search}%");
+            });
+        }
+
+        // FILTER Jenis Kelamin
+        if ($request->has('jenis_kelamin') && !empty($request->jenis_kelamin)) {
+            $query->where('jenis_kelamin', $request->jenis_kelamin);
+        }
+
+        // FILTER Agama
+        if ($request->has('agama') && !empty($request->agama)) {
+            $query->where('agama', $request->agama);
+        }
+
+        // Sorting default by created_at desc
+        $query->orderBy('created_at', 'desc');
+
+        // PAGINATION - 12 data per halaman untuk tampilan grid
+        $wargas = $query->paginate(12);
+
+        // Data untuk dropdown filter agama
+        $agamaList = Warga::select('agama')->distinct()->pluck('agama');
+        // ===============================
+        // END PAGINATION & FILTER
+        // ===============================
+
+        return view('pages.warga.index', compact('wargas', 'agamaList'));
     }
 
     /**
@@ -28,13 +66,12 @@ class WargaController extends Controller
      */
     public function store(Request $request)
     {
-
         // Validasi data
         $request->validate([
             'nama'          => 'required|string|max:255',
             'agama'         => 'nullable|string|max:50',
             'pekerjaan'     => 'nullable|string|max:100',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan', // Langsung validasi L/P
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'email'         => 'nullable|email|max:255',
             'No_Hp'         => 'nullable|string|max:15',
         ]);
@@ -43,7 +80,7 @@ class WargaController extends Controller
             'nama'          => $request->nama,
             'agama'         => $request->agama,
             'pekerjaan'     => $request->pekerjaan,
-            'jenis_kelamin' => $request->jenis_kelamin, // Langsung ambil dari request
+            'jenis_kelamin' => $request->jenis_kelamin,
             'email'         => $request->email,
             'No_Hp'         => $request->No_Hp,
         ];
@@ -80,7 +117,7 @@ class WargaController extends Controller
             'nama'          => 'required|string|max:255',
             'agama'         => 'nullable|string|max:50',
             'pekerjaan'     => 'nullable|string|max:100',
-            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan', // Langsung validasi L/P
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'email'         => 'nullable|email|max:255',
             'No_Hp'         => 'nullable|string|max:15',
         ]);
@@ -91,7 +128,7 @@ class WargaController extends Controller
             'nama'          => $request->nama,
             'agama'         => $request->agama,
             'pekerjaan'     => $request->pekerjaan,
-            'jenis_kelamin' => $request->jenis_kelamin, // Langsung ambil dari request
+            'jenis_kelamin' => $request->jenis_kelamin,
             'email'         => $request->email,
             'No_Hp'         => $request->No_Hp,
         ];

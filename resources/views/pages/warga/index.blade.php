@@ -20,23 +20,66 @@
                 </div>
             </div>
 
-            <div class="row">
-                {{-- Data dari database --}}
-                @php
-                    // Ambil data warga terbaru dari database
-                    $wargaTerkini = DB::table('warga')->orderBy('created_at', 'desc')->get();
-                @endphp
+            {{-- SEARCH & FILTER FORM --}}
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="GET" action="{{ route('warga.index') }}">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="search" class="form-label">Pencarian</label>
+                                        <input type="text" name="search" id="search" class="form-control"
+                                               value="{{ request('search') }}" placeholder="Cari nama, email, No HP, pekerjaan...">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                        <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                                            <option value="">Semua Jenis Kelamin</option>
+                                            <option value="Laki-laki" {{ request('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                            <option value="Perempuan" {{ request('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="agama" class="form-label">Agama</label>
+                                        <select name="agama" id="agama" class="form-control">
+                                            <option value="">Semua Agama</option>
+                                            @foreach($agamaList as $agama)
+                                                <option value="{{ $agama }}"
+                                                    {{ request('agama') == $agama ? 'selected' : '' }}>
+                                                    {{ $agama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">&nbsp;</label>
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-search me-1"></i> Filter
+                                            </button>
+                                            <a href="{{ route('warga.index') }}" class="btn btn-secondary">
+                                                <i class="fas fa-refresh me-1"></i> Reset
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                @foreach ($wargaTerkini as $warga)
+            <div class="row">
+                {{-- Data dari database menggunakan pagination --}}
+                @foreach ($wargas as $warga)
                     <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body text-center">
                                 {{-- Avatar/Icon berdasarkan jenis kelamin --}}
                                 <div class="mb-3">
-                                    {{-- UBAH DI SINI: Ganti 'L' menjadi 'Laki-laki' --}}
                                     <div
                                         class="avatar-circle {{ $warga->jenis_kelamin == 'Laki-laki' ? 'bg-primary' : 'bg-pink' }} mx-auto">
-                                        {{-- UBAH DI SINI: Ganti 'L' menjadi 'Laki-laki' --}}
                                         <i
                                             class="fas {{ $warga->jenis_kelamin == 'Laki-laki' ? 'fa-male' : 'fa-female' }} text-white"></i>
                                     </div>
@@ -56,12 +99,10 @@
                                     </div>
 
                                     <div class="info-item mb-2">
-                                        {{-- UBAH DI SINI: Ganti 'L' menjadi 'Laki-laki' --}}
                                         <i
                                             class="fas {{ $warga->jenis_kelamin == 'Laki-laki' ? 'fa-mars text-primary' : 'fa-venus text-pink' }} me-2"></i>
                                         <span class="text-muted">
-                                            {{-- UBAH DI SINI: Tampilkan langsung dari database --}}
-                                            {{ $warga->jenis_kelamin }} {{-- LANGSUNG TAMPILKAN NILAI DARI DATABASE --}}
+                                            {{ $warga->jenis_kelamin }}
                                         </span>
                                     </div>
                                 </div>
@@ -111,7 +152,7 @@
                 @endforeach
 
                 {{-- Fallback jika tidak ada data --}}
-                @if ($wargaTerkini->count() == 0)
+                @if ($wargas->count() == 0)
                     <div class="col-12">
                         <div class="text-center py-5">
                             <i class="fas fa-users fa-3x text-muted mb-3"></i>
@@ -122,13 +163,29 @@
                 @endif
             </div>
 
-            {{-- Info jumlah data --}}
-            @if ($wargaTerkini->count() > 0)
+            {{-- =============================== --}}
+            {{-- PAGINATION BOOTSTRAP 5 --}}
+            {{-- =============================== --}}
+            @if ($wargas->count() > 0)
                 <div class="row justify-content-center mt-5">
+                    <div class="col-md-8">
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-3">
+                                {{ $wargas->links('pagination::bootstrap-5') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Info jumlah data --}}
+            @if ($wargas->count() > 0)
+                <div class="row justify-content-center mt-3">
                     <div class="col-md-8">
                         <div class="alert alert-info text-center">
                             <i class="fas fa-info-circle me-2"></i>
-                            Menampilkan <strong>{{ $wargaTerkini->count() }}</strong> data warga
+                            Menampilkan <strong>{{ $wargas->firstItem() }} - {{ $wargas->lastItem() }}</strong>
+                            dari <strong>{{ $wargas->total() }}</strong> data warga
                         </div>
                     </div>
                 </div>
@@ -219,6 +276,11 @@
             align-items: center;
             justify-content: center;
             padding: 0.5rem;
+        }
+
+        /* Style untuk pagination Bootstrap 5 */
+        .pagination {
+            margin-bottom: 0;
         }
     </style>
 @endpush

@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CreateFirstUser::class,         // User pertama (Admin)
+            UserSeeder::class,         // User pertama (Admin)
             KategoriPengaduanSeeder::class, // Data kategori
             CreateWargaDummy::class,        // ✅ Warga dummy (sekarang sudah sesuai struktur)
             PengaduanDummySeeder::class,         // Data pengaduan (berelasi)
