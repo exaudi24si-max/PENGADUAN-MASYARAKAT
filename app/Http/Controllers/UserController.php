@@ -14,9 +14,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // ===============================
+
         // PAGINATION, SEARCH & FILTER DI SINI
-        // ===============================
+
         $query = User::query();
 
         // SEARCH - Pencarian berdasarkan name, email
@@ -41,9 +41,9 @@ class UserController extends Controller
 
         // Data untuk dropdown filter role
         $roleList = User::select('role')->distinct()->pluck('role');
-        // ===============================
+
         // END PAGINATION & FILTER
-        // ===============================
+
 
         return view('pages.user.index', compact('users', 'roleList'));
     }

@@ -108,4 +108,73 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /*  */
+        <style>
+    /* ===== MOBILE RESPONSIVE FIX ===== */
+    /* Pastikan container tidak overflow di mobile */
+    @media (max-width: 768px) {
+        .container, .container-fluid {
+            max-width: 100% !important;
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            overflow-x: hidden !important;
+        }
+
+        /* Force responsive behavior */
+        html, body {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+            position: relative;
+        }
+
+        /* Fix untuk row dan column */
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .row > * {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        /* Pastikan images responsive */
+        img {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        /* Text size untuk mobile */
+        h1 { font-size: 1.8rem !important; }
+        h2 { font-size: 1.5rem !important; }
+        h3 { font-size: 1.3rem !important; }
+        .display-1 { font-size: 2.5rem !important; }
+        .display-2 { font-size: 2.2rem !important; }
+        .display-3 { font-size: 1.9rem !important; }
+        .display-4 { font-size: 1.6rem !important; }
+    }
+
+    /* ===== FIX UNTUK FLOATING WHATSAPP DI MOBILE ===== */
+    @media (max-width: 768px) {
+        .floating-whatsapp {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .whatsapp-btn {
+            width: 50px;
+            height: 50px;
+        }
+
+        .whatsapp-btn i {
+            font-size: 24px;
+        }
+
+        .whatsapp-tooltip {
+            display: none; /* Sembunyikan tooltip di mobile */
+        }
+    }
+</style>
     </style>

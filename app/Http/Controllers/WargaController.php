@@ -11,9 +11,8 @@ class WargaController extends Controller
      */
     public function index(Request $request)
     {
-        // ===============================
         // PAGINATION, SEARCH & FILTER DI SINI
-        // ===============================
+
         $query = Warga::query();
 
         // SEARCH - Pencarian berdasarkan nama, email, No_Hp, pekerjaan
@@ -46,9 +45,9 @@ class WargaController extends Controller
 
         // Data untuk dropdown filter agama
         $agamaList = Warga::select('agama')->distinct()->pluck('agama');
-        // ===============================
+      
         // END PAGINATION & FILTER
-        // ===============================
+
 
         return view('pages.warga.index', compact('wargas', 'agamaList'));
     }
