@@ -10,7 +10,8 @@
                         <p class="text-muted">Isi form berikut untuk membuat laporan pengaduan</p>
                     </div>
 
-                    <form action="{{ route('laporans.store') }}" method="POST" class="p-5 bg-white shadow-sm rounded">
+                    <!-- ✅ MODIFIKASI: Tambah enctype untuk upload file -->
+                    <form action="{{ route('laporans.store') }}" method="POST" class="p-5 bg-white shadow-sm rounded" enctype="multipart/form-data">
                         @csrf
 
                         @if (session('success'))
@@ -43,9 +44,9 @@
                                 <div class="form-group mb-3">
                                     <label for="nama_pelapor" class="form-label">Nama Pelapor *</label>
                                     <input type="text" name="nama_pelapor"
-                                           class="form-control @error('nama_pelapor') is-invalid @enderror"
-                                           value="{{ old('nama_pelapor') }}"
-                                           placeholder="Nama lengkap" required>
+                                        class="form-control @error('nama_pelapor') is-invalid @enderror"
+                                        value="{{ old('nama_pelapor') }}"
+                                        placeholder="Nama lengkap" required>
                                     @error('nama_pelapor')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -56,9 +57,9 @@
                                 <div class="form-group mb-3">
                                     <label for="email_pelapor" class="form-label">Email</label>
                                     <input type="email" name="email_pelapor"
-                                           class="form-control @error('email_pelapor') is-invalid @enderror"
-                                           value="{{ old('email_pelapor') }}"
-                                           placeholder="email@contoh.com">
+                                        class="form-control @error('email_pelapor') is-invalid @enderror"
+                                        value="{{ old('email_pelapor') }}"
+                                        placeholder="email@contoh.com">
                                     @error('email_pelapor')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -69,9 +70,9 @@
                                 <div class="form-group mb-3">
                                     <label for="no_telepon" class="form-label">No. Telepon</label>
                                     <input type="text" name="no_telepon"
-                                           class="form-control @error('no_telepon') is-invalid @enderror"
-                                           value="{{ old('no_telepon') }}"
-                                           placeholder="08xxx">
+                                        class="form-control @error('no_telepon') is-invalid @enderror"
+                                        value="{{ old('no_telepon') }}"
+                                        placeholder="08xxx">
                                     @error('no_telepon')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -109,9 +110,9 @@
                                 <div class="form-group mb-3">
                                     <label for="judul" class="form-label">Judul Laporan *</label>
                                     <input type="text" name="judul"
-                                           class="form-control @error('judul') is-invalid @enderror"
-                                           value="{{ old('judul') }}"
-                                           placeholder="Masukkan judul laporan" required>
+                                        class="form-control @error('judul') is-invalid @enderror"
+                                        value="{{ old('judul') }}"
+                                        placeholder="Masukkan judul laporan" required>
                                     @error('judul')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -131,9 +132,9 @@
                                 <div class="form-group mb-3">
                                     <label for="lokasi_text" class="form-label">Alamat/Lokasi</label>
                                     <input type="text" name="lokasi_text"
-                                           class="form-control @error('lokasi_text') is-invalid @enderror"
-                                           value="{{ old('lokasi_text') }}"
-                                           placeholder="Nama jalan, desa, kelurahan">
+                                        class="form-control @error('lokasi_text') is-invalid @enderror"
+                                        value="{{ old('lokasi_text') }}"
+                                        placeholder="Nama jalan, desa, kelurahan">
                                     @error('lokasi_text')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -144,9 +145,9 @@
                                 <div class="form-group mb-3">
                                     <label for="rt" class="form-label">RT</label>
                                     <input type="text" name="rt"
-                                           class="form-control @error('rt') is-invalid @enderror"
-                                           value="{{ old('rt') }}"
-                                           placeholder="001">
+                                        class="form-control @error('rt') is-invalid @enderror"
+                                        value="{{ old('rt') }}"
+                                        placeholder="001">
                                     @error('rt')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -157,9 +158,9 @@
                                 <div class="form-group mb-3">
                                     <label for="rw" class="form-label">RW</label>
                                     <input type="text" name="rw"
-                                           class="form-control @error('rw') is-invalid @enderror"
-                                           value="{{ old('rw') }}"
-                                           placeholder="002">
+                                        class="form-control @error('rw') is-invalid @enderror"
+                                        value="{{ old('rw') }}"
+                                        placeholder="002">
                                     @error('rw')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -171,11 +172,46 @@
                         <div class="form-group mb-4">
                             <label for="deskripsi" class="form-label">Deskripsi Lengkap *</label>
                             <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
-                                      cols="30" rows="5"
-                                      placeholder="Jelaskan secara detail tentang laporan/pengaduan Anda..." required>{{ old('deskripsi') }}</textarea>
+                                    cols="30" rows="5"
+                                    placeholder="Jelaskan secara detail tentang laporan/pengaduan Anda..." required>{{ old('deskripsi') }}</textarea>
                             @error('deskripsi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <!-- ✅ MODIFIKASI: Tambah section untuk upload foto -->
+                        {{-- Foto --}}
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-camera me-2"></i>Upload Foto Pendukung
+                                </h5>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label for="foto" class="form-label">Foto (Opsional)</label>
+                                    <input type="file" name="foto"
+                                           class="form-control @error('foto') is-invalid @enderror"
+                                           id="foto" accept="image/*">
+                                    <small class="text-muted">
+                                        Format: JPEG, PNG, JPG, GIF, WEBP | Maksimal: 5MB
+                                    </small>
+                                    @error('foto')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                {{-- Preview Foto --}}
+                                <div id="preview-container" class="mt-2" style="display: none;">
+                                    <p class="small text-muted mb-1">Preview:</p>
+                                    <img id="preview" src="#" alt="Preview Foto"
+                                         class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                                    <button type="button" id="remove-preview" class="btn btn-sm btn-danger mt-2">
+                                        <i class="fas fa-times"></i> Hapus Preview
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="text-center">
@@ -192,3 +228,40 @@
         </div>
     </div>
 @endsection
+
+<!-- ✅ MODIFIKASI: Tambah script untuk preview foto -->
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fotoInput = document.getElementById('foto');
+        const previewContainer = document.getElementById('preview-container');
+        const preview = document.getElementById('preview');
+        const removePreviewBtn = document.getElementById('remove-preview');
+
+        if (fotoInput) {
+            fotoInput.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        previewContainer.style.display = 'block';
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    previewContainer.style.display = 'none';
+                }
+            });
+        }
+
+        if (removePreviewBtn) {
+            removePreviewBtn.addEventListener('click', function() {
+                fotoInput.value = '';
+                preview.src = '#';
+                previewContainer.style.display = 'none';
+            });
+        }
+    });
+</script>
+@endpush

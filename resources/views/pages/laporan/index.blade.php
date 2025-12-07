@@ -146,6 +146,28 @@
                                     </small>
                                 </p>
 
+                                <!-- ✅ MODIFIKASI: Tambah foto di card -->
+                                {{-- Foto --}}
+                                @if ($laporan->foto)
+                                    <div class="mb-3">
+                                        <div class="position-relative"
+                                            style="height: 150px; overflow: hidden; border-radius: 8px;">
+                                            <img src="{{ asset('storage/' . $laporan->foto) }}" alt="Foto Laporan"
+                                                class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                            <div
+                                                class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-50 text-white p-2">
+                                                <small>
+                                                    <i class="fas fa-image me-1"></i>
+                                                    <a href="{{ asset('storage/' . $laporan->foto) }}" target="_blank"
+                                                        class="text-white text-decoration-none">
+                                                        Lihat Foto
+                                                    </a>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 {{-- Deskripsi --}}
                                 <p class="card-text">{{ Str::limit($laporan->deskripsi, 120) }}</p>
 
@@ -200,6 +222,12 @@
                             {{-- Action Buttons --}}
                             <div class="card-footer bg-transparent border-top-0 pt-0">
                                 <div class="btn-group w-100" role="group">
+                                    {{-- Button View --}}
+                                    <a href="{{ route('laporans.show', $laporan->pengaduan_id) }}"
+                                        class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
+
                                     {{-- Button Edit --}}
                                     <a href="{{ route('laporans.edit', $laporan->pengaduan_id) }}"
                                         class="btn btn-sm btn-outline-primary">
@@ -373,6 +401,15 @@
         .page-item.active .page-link {
             background-color: #667eea;
             border-color: #667eea;
+        }
+
+        /* ✅ MODIFIKASI: Style untuk foto di card */
+        .position-relative {
+            position: relative !important;
+        }
+
+        .bg-opacity-50 {
+            background-color: rgba(0, 0, 0, 0.5) !important;
         }
     </style>
 @endpush

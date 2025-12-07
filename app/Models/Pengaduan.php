@@ -21,6 +21,7 @@ class Pengaduan extends Model
         'kategori_id',
         'judul',
         'deskripsi',
+        'foto', //ini untuk model foto
         'status',
         'lokasi_text',
         'rt',
@@ -33,3 +34,4 @@ class Pengaduan extends Model
         return $this->belongsTo(KategoriPengaduan::class, 'kategori_id', 'kategori_id');
     }
 }
+

@@ -24,7 +24,7 @@ class GuestController extends Controller
     }
 
     /**
-     * Halaman Layanan
+     * Halaman Layananz
      */
     public function layanan()
     {

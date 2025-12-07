@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class LaporanController extends Controller
@@ -79,8 +80,19 @@ class LaporanController extends Controller
             'deskripsi' => 'required|string',
             'lokasi_text' => 'nullable|string',
             'rt' => 'nullable|string|max:10',
-            'rw' => 'nullable|string|max:10'
+            'rw' => 'nullable|string|max:10',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // ✅ 5MB max
         ]);
+
+        // ✅ UPLOAD FOTO jika ada
+        $fotoPath = null;
+        if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
+            // Generate nama file unik
+            $fileName = 'foto_' . time() . '_' . Str::random(10) . '.' . $request->file('foto')->getClientOriginalExtension();
+
+            // Simpan file ke storage
+            $fotoPath = $request->file('foto')->storeAs('uploads/pengaduan', $fileName, 'public');
+        }
 
         // Generate nomor tiket unik
         $nomorTiket = 'TKT-' . strtoupper(Str::random(8)) . '-' . date('Ymd');
@@ -93,6 +105,7 @@ class LaporanController extends Controller
             'kategori_id' => $request->kategori_id,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
+            'foto' => $fotoPath, // ✅ SIMPAN PATH FOTO
             'status' => 'baru',
             'lokasi_text' => $request->lokasi_text,
             'rt' => $request->rt,
@@ -144,8 +157,35 @@ class LaporanController extends Controller
             'status' => 'required|in:baru,proses,selesai,ditolak',
             'lokasi_text' => 'nullable|string',
             'rt' => 'nullable|string|max:10',
-            'rw' => 'nullable|string|max:10'
+            'rw' => 'nullable|string|max:10',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // ✅ 5MB max
         ]);
+
+        // Ambil data laporan lama
+        $laporan = DB::table('pengaduan')->where('pengaduan_id', $id)->first();
+
+        // ✅ HANDLE UPLOAD FOTO BARU
+        $fotoPath = $laporan->foto; // Default pakai foto lama
+
+        if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
+            // Hapus foto lama jika ada
+            if ($laporan->foto && Storage::disk('public')->exists($laporan->foto)) {
+                Storage::disk('public')->delete($laporan->foto);
+            }
+
+            // Generate nama file unik
+            $fileName = 'foto_' . time() . '_' . Str::random(10) . '.' . $request->file('foto')->getClientOriginalExtension();
+
+            // Simpan file baru
+            $fotoPath = $request->file('foto')->storeAs('uploads/pengaduan', $fileName, 'public');
+        }
+        // ✅ TAMBAHAN: Jika user ingin hapus foto (checkbox)
+        elseif ($request->has('hapus_foto_existing') && $laporan->foto) {
+            if (Storage::disk('public')->exists($laporan->foto)) {
+                Storage::disk('public')->delete($laporan->foto);
+            }
+            $fotoPath = null;
+        }
 
         DB::table('pengaduan')
             ->where('pengaduan_id', $id)
@@ -156,6 +196,7 @@ class LaporanController extends Controller
                 'kategori_id' => $request->kategori_id,
                 'judul' => $request->judul,
                 'deskripsi' => $request->deskripsi,
+                'foto' => $fotoPath, // ✅ UPDATE PATH FOTO
                 'status' => $request->status,
                 'lokasi_text' => $request->lokasi_text,
                 'rt' => $request->rt,
@@ -172,6 +213,14 @@ class LaporanController extends Controller
      */
     public function destroy(string $id)
     {
+        // Ambil data laporan
+        $laporan = DB::table('pengaduan')->where('pengaduan_id', $id)->first();
+
+        // ✅ HAPUS FOTO jika ada
+        if ($laporan && $laporan->foto && Storage::disk('public')->exists($laporan->foto)) {
+            Storage::disk('public')->delete($laporan->foto);
+        }
+
         DB::table('pengaduan')->where('pengaduan_id', $id)->delete();
 
         return redirect()->route('laporans.index')
