@@ -10,7 +10,7 @@
                 <h1 class="display-4 fw-bold text-white mb-4">
                     Suara Anda
                     <span class="text-warning">Membuat</span>
-                    Perubahan
+                    Perubahanp
                 </h1>
                 <p class="lead text-white mb-5 opacity-75">
                     Sampaikan laporan, keluhan, dan aspirasi secara langsung.
@@ -21,9 +21,9 @@
                     <a href="{{ route('laporans.create') }}" class="btn btn-warning btn-lg fw-bold px-4 py-3">
                         <i class="fas fa-plus-circle me-2"></i>Buat Laporan Sekarang
                     </a>
-                    <a href="#services-section" class="btn btn-outline-light btn-lg px-4 py-3">
+                    {{-- <a href="#services-section" class="btn btn-outline-light btn-lg px-4 py-3">
                         <i class="fas fa-play-circle me-2"></i>Lihat Layanan
-                    </a>
+                    </a> --}}
                 </div>
 
                 {{-- Quick Stats --}}

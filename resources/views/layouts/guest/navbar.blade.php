@@ -40,13 +40,13 @@
                     <!-- Nama user di desktop -->
                     <li class="nav-item d-none d-lg-block">
                         <span class="navbar-text text-white me-3">
-                            <i class="fas fa-user me-1"></i>{{ Auth::user()->name }}
+
                         </span>
                     </li>
 
                     <!-- Tombol Logout (desktop) -->
                     <li class="nav-item ms-2 d-none d-lg-block">
-                        <form action="{{ route('login') }}" method="POST" class="d-inline">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
                             <button type="submit" class="btn btn-outline-light btn-sm"
                                 onclick="return confirm('Yakin ingin logout?')">

@@ -7,7 +7,6 @@
     <div class="container">
         <div class="row align-items-center min-vh-50">
             <div class="col-lg-8 mx-auto text-center">
-                <span class="badge bg-warning text-dark fs-6 mb-3">Tentang Platform Kami</span>
                 <h1 class="display-4 fw-bold mb-4">Mendengar Setiap Suara, Menjawab Setiap Aspirasi</h1>
                 <p class="lead mb-0">Platform digital inovatif yang menghubungkan masyarakat dengan pelayanan publik secara transparan dan efisien</p>
             </div>
@@ -67,9 +66,9 @@
                     <a href="{{ route('laporans.create') }}" class="btn btn-primary btn-lg px-4">
                         <i class="fas fa-edit me-2"></i>Buat Laporan
                     </a>
-                    <a href="#services-section" class="btn btn-outline-primary btn-lg px-4">
+                    {{-- <a href="#services-section" class="btn btn-outline-primary btn-lg px-4">
                         <i class="fas fa-play-circle me-2"></i>Lihat Layanan
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>

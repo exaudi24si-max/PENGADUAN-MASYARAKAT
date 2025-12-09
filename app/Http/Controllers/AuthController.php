@@ -55,6 +55,7 @@ class AuthController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
+            'role'     => 'admin', // ← TAMBAH INI: Set default role 'masyarakat' untuk user baru
         ]);
 
         Auth::attempt($request->only('email', 'password'));
@@ -68,7 +69,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')
+        return redirect()->route('beranda')
             ->with('success', 'Anda telah berhasil logout. Silakan login kembali jika ingin masuk.');
     }
 
@@ -86,6 +87,7 @@ class AuthController extends Controller
                 'name'     => 'Exaudi Banjar',
                 'email'    => 'exaudibanjar@gmail.com',
                 'password' => Hash::make('password123'),
+                'role'     => 'admin', // ← TAMBAH INI: Set user default sebagai 'admin'
             ]);
         }
     }
@@ -99,4 +101,3 @@ class AuthController extends Controller
         return redirect('/login')->with('success', 'User default berhasil dibuat! Email: exaudibanjar@gmail.com, Password: password123');
     }
 }
-
