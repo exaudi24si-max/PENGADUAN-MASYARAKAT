@@ -148,12 +148,13 @@
 
                                 <!-- ✅ MODIFIKASI: Tambah foto di card -->
                                 {{-- Foto --}}
-                                @if ($laporan->foto)
+                                @if (isset($laporan->foto) && !empty($laporan->foto))
                                     <div class="mb-3">
                                         <div class="position-relative"
                                             style="height: 150px; overflow: hidden; border-radius: 8px;">
                                             <img src="{{ asset('storage/' . $laporan->foto) }}" alt="Foto Laporan"
                                                 class="img-fluid w-100 h-100" style="object-fit: cover;">
+
                                             <div
                                                 class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-50 text-white p-2">
                                                 <small>
@@ -167,6 +168,7 @@
                                         </div>
                                     </div>
                                 @endif
+
 
                                 {{-- Deskripsi --}}
                                 <p class="card-text">{{ Str::limit($laporan->deskripsi, 120) }}</p>
