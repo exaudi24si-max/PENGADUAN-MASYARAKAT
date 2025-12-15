@@ -30,13 +30,13 @@
                                     <div class="col-md-4">
                                         <label for="search" class="form-label">Pencarian</label>
                                         <input type="text" name="search" id="search" class="form-control"
-                                               value="{{ request('search') }}" placeholder="Cari nama atau email...">
+                                            value="{{ request('search') }}" placeholder="Cari nama atau email...">
                                     </div>
                                     <div class="col-md-3">
                                         <label for="role" class="form-label">Role</label>
                                         <select name="role" id="role" class="form-control">
                                             <option value="">Semua Role</option>
-                                            @foreach($roleList as $role)
+                                            @foreach ($roleList as $role)
                                                 <option value="{{ $role }}"
                                                     {{ request('role') == $role ? 'selected' : '' }}>
                                                     {{ ucfirst($role) }}
@@ -68,11 +68,16 @@
                     <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body text-center">
-                                {{-- Avatar/Icon --}}
+                                {{-- Avatar/Foto Profil --}}
                                 <div class="mb-3">
-                                    <div
-                                        class="avatar-circle {{ $user->role == 'admin' ? 'bg-danger' : ($user->role == 'staff' ? 'bg-warning' : 'bg-primary') }} mx-auto">
-                                        <i class="fas fa-user text-white"></i>
+                                    <div class="mx-auto" style="width: 100px; height: 100px;">
+                                        <img src="{{ $user->profile_picture
+                                            ? asset('storage/' . $user->profile_picture)
+                                            : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) }}"
+                                            class="rounded-circle border"
+                                            style="width: 100%; height: 100%; object-fit: cover; border-width: 3px !important;"
+                                            alt="{{ $user->name }}"
+                                            onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background={{ $user->role == 'admin' ? 'DC2626' : ($user->role == 'staff' ? 'F59E0B' : '3B82F6') }}&color=fff&size=100'">
                                     </div>
                                 </div>
 
@@ -98,14 +103,26 @@
                                             Bergabung: {{ \Carbon\Carbon::parse($user->created_at)->format('d M Y') }}
                                         </span>
                                     </div>
+
+                                    @if ($user->profile_picture)
+                                        <div class="info-item mb-2">
+                                            <i class="fas fa-image text-muted me-2"></i>
+                                            <span class="text-muted small">Memiliki foto profil</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="card-footer bg-transparent border-top-0 pt-0">
                                 {{-- Action Buttons --}}
                                 <div class="btn-group w-100 mt-3" role="group">
+                                    {{-- Button Detail --}}
+                                    <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
+
                                     {{-- Button Edit --}}
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
 
@@ -252,6 +269,15 @@
             align-items: center;
             justify-content: center;
             padding: 0.5rem;
+        }
+
+        /* Style untuk foto profil */
+        .border {
+            border-color: #dee2e6 !important;
+        }
+
+        .border:hover {
+            border-color: #007bff !important;
         }
     </style>
 @endpush

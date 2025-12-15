@@ -1,9 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
     <div class="container">
-        {{-- Brand Logo --}}
-        <a class="navbar-brand fw-bold text-white d-flex align-items-center" href="{{ route('beranda') }}">
-            <i class="fas fa-bullhorn me-2" style="font-size: 1.5rem;"></i>
-            Pengaduan Masyarakat
+        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+            <img src="{{ asset('pengaduan-masyarakat/images/logosaya.png') }}" alt="Logo Pengaduan Masyarakat"
+                class="logo-navbar">
+            <span class="ms-2 fw-semibold text-white">
+            </span>
         </a>
 
         {{-- Mobile Toggle Button --}}
@@ -22,9 +23,26 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('tentang') }}#about-section">Tentang</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('layanan') }}#services-section">Layanan</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="layananDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Layanan
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('layanan') }}#services-section">
+                                <i class="fas fa-concierge-bell me-2"></i>Daftar Layanan
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profil.pengembang') }}">
+                                <i class="fas fa-user-tie me-2"></i>Profil Pengembang
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('laporans.index') }}#report-section">Laporan</a>
                 </li>
@@ -114,6 +132,76 @@
 
 {{-- Style tambahan --}}
 <style>
+    /* =========================
+   NAVBAR
+========================= */
+    .navbar {
+        min-height: 72px;
+        /* navbar lebih lega */
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    /* =========================
+   BRAND / LOGO
+========================= */
+    .navbar-brand {
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* LOGO UTAMA */
+    /* LOGO */
+    .logo-navbar {
+        height: 56px;
+        width: auto;
+        object-fit: contain;
+
+        background: rgba(255, 255, 255, 0.15);
+        /* halus, tidak norak */
+        padding: 6px 10px;
+        border-radius: 10px;
+
+        transition: all 0.3s ease;
+    }
+
+    /* Hover halus */
+    .logo-navbar:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: scale(1.05);
+    }
+
+    /* =========================
+   RESPONSIVE (MOBILE)
+========================= */
+    @media (max-width: 576px) {
+        .logo-navbar {
+            height: 48px;
+            /* lebih kecil di HP */
+        }
+
+        .navbar {
+            min-height: 64px;
+        }
+    }
+
+    /* =========================
+   NAV LINK EFFECT
+========================= */
+    .navbar-nav .nav-link {
+        transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+    }
+
+    /* Dropdown hover */
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+    }
+
     .navbar-nav .nav-link {
         transition: color 0.3s ease;
     }

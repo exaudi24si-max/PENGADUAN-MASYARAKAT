@@ -10,7 +10,7 @@
                         <p class="text-muted">Update data user yang sudah ada</p>
                     </div>
 
-                    <form action="{{ route('users.update', $user->id) }}" method="POST" class="p-5 bg-white shadow-sm rounded">
+                    <form action="{{ route('users.update', $user->id) }}" method="POST" class="p-5 bg-white shadow-sm rounded" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -97,6 +97,47 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="profile_picture" class="form-label">Foto Profil</label>
+
+                                    {{-- Tampilkan foto saat ini --}}
+                                    @if($user->profile_picture_url)
+                                        <div class="mb-3 text-center">
+                                            <img src="{{ $user->profile_picture_url }}"
+                                                 class="img-thumbnail rounded-circle"
+                                                 style="width: 150px; height: 150px; object-fit: cover;"
+                                                 alt="Foto Profil {{ $user->name }}">
+                                            <p class="small text-muted mt-1">Foto saat ini</p>
+                                        </div>
+
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" name="remove_picture" id="remove_picture" value="1">
+                                            <label class="form-check-label text-danger" for="remove_picture">
+                                                <i class="fas fa-trash me-1"></i>Hapus foto saat ini
+                                            </label>
+                                        </div>
+                                    @endif
+
+                                    <input type="file" name="profile_picture"
+                                           class="form-control @error('profile_picture') is-invalid @enderror"
+                                           accept="image/*" id="profilePictureInput">
+                                    <small class="text-muted">Format: JPEG, PNG, JPG, GIF (Max: 2MB). Kosongkan jika tidak ingin mengganti.</small>
+                                    @error('profile_picture')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                    {{-- Preview area --}}
+                                    <div class="mt-2 text-center">
+                                        <div id="imagePreview" style="display: none;">
+                                            <img id="previewImage" class="img-thumbnail rounded-circle"
+                                                 style="width: 150px; height: 150px; object-fit: cover;">
+                                            <p class="small text-muted mt-1">Preview foto baru</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="text-center">
@@ -137,4 +178,44 @@
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
     </style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('profilePictureInput');
+    const previewDiv = document.getElementById('imagePreview');
+    const previewImage = document.getElementById('previewImage');
+    const removeCheckbox = document.getElementById('remove_picture');
+
+    if (fileInput && previewDiv && previewImage) {
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewDiv.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewDiv.style.display = 'none';
+            }
+        });
+    }
+
+    // Handle remove picture checkbox
+    if (removeCheckbox) {
+        removeCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                fileInput.disabled = true;
+                fileInput.value = '';
+                if (previewDiv) previewDiv.style.display = 'none';
+            } else {
+                fileInput.disabled = false;
+            }
+        });
+    }
+});
+</script>
 @endpush

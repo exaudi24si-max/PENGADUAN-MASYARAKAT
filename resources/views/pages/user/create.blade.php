@@ -10,7 +10,7 @@
                         <p class="text-muted">Isi form berikut untuk menambahkan user baru</p>
                     </div>
 
-                    <form action="{{ route('users.store') }}" method="POST">
+                    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         @if (session('success'))
@@ -95,6 +95,28 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="profile_picture" class="form-label">Foto Profil</label>
+                                    <input type="file" name="profile_picture"
+                                           class="form-control @error('profile_picture') is-invalid @enderror"
+                                           accept="image/*" id="profilePictureInput">
+                                    <small class="text-muted">Format: JPEG, PNG, JPG, GIF (Max: 2MB)</small>
+                                    @error('profile_picture')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                    {{-- Preview area --}}
+                                    <div class="mt-2 text-center">
+                                        <div id="imagePreview" style="display: none;">
+                                            <img id="previewImage" class="img-thumbnail rounded-circle"
+                                                 style="width: 150px; height: 150px; object-fit: cover;">
+                                            <p class="small text-muted mt-1">Preview foto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="text-center">
@@ -135,4 +157,30 @@
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
     </style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('profilePictureInput');
+    const previewDiv = document.getElementById('imagePreview');
+    const previewImage = document.getElementById('previewImage');
+
+    if (fileInput && previewDiv && previewImage) {
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewDiv.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewDiv.style.display = 'none';
+            }
+        });
+    }
+});
+</script>
 @endpush

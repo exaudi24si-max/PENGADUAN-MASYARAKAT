@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -14,9 +15,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
         // PAGINATION, SEARCH & FILTER DI SINI
-
         $query = User::query();
 
         // SEARCH - Pencarian berdasarkan name, email
@@ -43,8 +42,6 @@ class UserController extends Controller
         $roleList = User::select('role')->distinct()->pluck('role');
 
         // END PAGINATION & FILTER
-
-
         return view('pages.user.index', compact('users', 'roleList'));
     }
 
@@ -65,7 +62,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
-            'role' => 'required|in:admin,staff,user'
+            'role' => 'required|in:admin,staff,user',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB max, support webp
         ]);
 
         if ($validator->fails()) {
@@ -74,12 +72,27 @@ class UserController extends Controller
                 ->withInput();
         }
 
-        User::create([
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role
-        ]);
+        ];
+
+        // Handle profile picture upload WITH COMPRESSION
+        if ($request->hasFile('profile_picture')) {
+            $path = User::compressAndSaveProfilePicture($request->file('profile_picture'));
+
+            if ($path) {
+                $data['profile_picture'] = $path;
+            } else {
+                return redirect()->back()
+                    ->withErrors(['profile_picture' => 'Gagal mengunggah foto profil. Pastikan file berupa gambar yang valid.'])
+                    ->withInput();
+            }
+        }
+
+        User::create($data);
 
         return redirect()->route('users.index')
             ->with('success', 'User berhasil ditambahkan');
@@ -114,7 +127,9 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:8|confirmed',
-            'role' => 'required|in:admin,staff,user'
+            'role' => 'required|in:admin,staff,user',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'remove_picture' => 'nullable|boolean'
         ]);
 
         if ($validator->fails()) {
@@ -132,6 +147,29 @@ class UserController extends Controller
         // Update password hanya jika diisi
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
+        }
+
+        // Handle remove existing picture
+        if ($request->has('remove_picture') && $user->profile_picture) {
+            $user->deleteProfilePictureFiles();
+            $data['profile_picture'] = null;
+        }
+
+        // Handle new profile picture upload WITH COMPRESSION
+        if ($request->hasFile('profile_picture')) {
+            // Delete old picture files if exists
+            $user->deleteProfilePictureFiles();
+
+            // Compress and save new picture
+            $path = User::compressAndSaveProfilePicture($request->file('profile_picture'));
+
+            if ($path) {
+                $data['profile_picture'] = $path;
+            } else {
+                return redirect()->back()
+                    ->withErrors(['profile_picture' => 'Gagal mengunggah foto profil. Pastikan file berupa gambar yang valid.'])
+                    ->withInput();
+            }
         }
 
         $user->update($data);
@@ -153,9 +191,80 @@ class UserController extends Controller
                 ->with('error', 'Tidak dapat menghapus akun sendiri');
         }
 
+        // Delete all profile picture files
+        $user->deleteProfilePictureFiles();
+
+        // Delete user
         $user->delete();
 
         return redirect()->route('users.index')
             ->with('success', 'User berhasil dihapus');
+    }
+
+    /**
+     * Reset password untuk user (opsional)
+     */
+    public function resetPassword(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect()->route('users.index')
+            ->with('success', 'Password berhasil direset');
+    }
+
+    /**
+     * Bulk delete users (opsional)
+     */
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_ids' => 'required|array',
+            'user_ids.*' => 'exists:users,id'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator);
+        }
+
+        $deletedCount = 0;
+        $currentUserId = auth()->id();
+
+        foreach ($request->user_ids as $userId) {
+            // Skip jika mencoba menghapus diri sendiri
+            if ($userId == $currentUserId) {
+                continue;
+            }
+
+            $user = User::find($userId);
+            if ($user) {
+                // Delete profile picture files
+                $user->deleteProfilePictureFiles();
+
+                // Delete user
+                $user->delete();
+                $deletedCount++;
+            }
+        }
+
+        $message = $deletedCount > 0
+            ? "{$deletedCount} user berhasil dihapus."
+            : "Tidak ada user yang dihapus.";
+
+        return redirect()->route('users.index')
+            ->with('success', $message);
     }
 }

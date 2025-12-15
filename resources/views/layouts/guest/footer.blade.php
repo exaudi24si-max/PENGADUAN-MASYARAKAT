@@ -8,7 +8,6 @@
         <button class="whatsapp-btn" onclick="openWhatsAppModal()">
             <i class="bi bi-whatsapp"></i>
         </button>
-        <div class="whatsapp-tooltip">Hubungi via WhatsApp</div>
     </div>
 
     <!-- WhatsApp Modal -->
@@ -68,14 +67,20 @@
             modal.hide();
         }
     </script>
-<footer class="site-footer bg-dark text-white py-5">
+<footer class="site-footer bg-dark text-white py-4">
     <div class="container text-center">
-        <h3 class="footer-title">Pengaduan & Aspirasi Masyarakat</h3>
-        <p class="mb-3">Platform resmi untuk menyampaikan keluhan dan aspirasi masyarakat demi pelayanan
-            publik yang lebih baik.</p>
-        <p class="small mb-0">&copy; 2u025 Pengaduan Masyarakat. Semua Hak Dilindungi.</p>
+        <p class="fw-semibold mb-1">
+            Sistem Pengaduan & Aspirasi Masyarakat
+        </p>
+        <p class="small mb-2">
+            Platform resmi untuk menyampaikan keluhan dan aspirasi masyarakat demi pelayanan publik yang lebih baik.
+        </p>
+        <p class="small mb-0">
+            &copy; 2025 Pengaduan & Aspirasi Masyarakat. Semua Hak Dilindungi.
+        </p>
     </div>
 </footer>
+
 
 
 {{-- end footer --}}

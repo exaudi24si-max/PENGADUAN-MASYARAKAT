@@ -12,6 +12,11 @@ Route::get('/', [GuestController::class, 'beranda'])->name('beranda');
 Route::get('/tentang', [GuestController::class, 'tentang'])->name('tentang');
 Route::get('/layanan', [GuestController::class, 'layanan'])->name('layanan');
 
+// ==================== PROFIL PENGEMBANG ====================
+Route::get('/profil-pengembang', function () {
+    return view('pages.profil-pengembang');
+})->name('profil.pengembang');
+
 // Authentication routes (SEMUA BISA AKSES)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

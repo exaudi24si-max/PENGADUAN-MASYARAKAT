@@ -20,7 +20,7 @@
         <div class="row align-items-center mb-5">
             <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
                 <div class="position-relative">
-                    <img src="{{ asset('pengaduan-masyarakat/images/about1.jpg') }}" alt="Tentang Kami" class="img-fluid rounded-3 shadow-lg">
+                    <img src="{{ asset('pengaduan-masyarakat/images/about.png') }}" alt="Tentang Kami" class="img-fluid rounded-3 shadow-lg">
                     <div class="floating-badge bg-warning text-dark rounded-pill p-3 shadow position-absolute top-0 start-0 m-3">
                         <i class="fas fa-bullhorn me-2"></i>Sejak 2025
                     </div>
@@ -66,9 +66,6 @@
                     <a href="{{ route('laporans.create') }}" class="btn btn-primary btn-lg px-4">
                         <i class="fas fa-edit me-2"></i>Buat Laporan
                     </a>
-                    {{-- <a href="#services-section" class="btn btn-outline-primary btn-lg px-4">
-                        <i class="fas fa-play-circle me-2"></i>Lihat Layanan
-                    </a> --}}
                 </div>
             </div>
         </div>
@@ -81,7 +78,7 @@
             </div>
             <div class="col-md-3 col-6 text-center" data-aos="fade-up">
                 <div class="stat-card p-4">
-                    <div class="stat-icon bg-primary bg-opacity-10 rounded-circle mx-auto mb-3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <div class="stat-icon bg-primary bg-opacity-10 rounded-circle mx-auto mb-3">
                         <i class="fas fa-file-alt text-primary fs-2"></i>
                     </div>
                     <h3 class="fw-bold text-primary" data-count="2500">0</h3>
@@ -90,7 +87,7 @@
             </div>
             <div class="col-md-3 col-6 text-center" data-aos="fade-up" data-aos-delay="100">
                 <div class="stat-card p-4">
-                    <div class="stat-icon bg-success bg-opacity-10 rounded-circle mx-auto mb-3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <div class="stat-icon bg-success bg-opacity-10 rounded-circle mx-auto mb-3">
                         <i class="fas fa-check-circle text-success fs-2"></i>
                     </div>
                     <h3 class="fw-bold text-success" data-count="89">0</h3>
@@ -99,7 +96,7 @@
             </div>
             <div class="col-md-3 col-6 text-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="stat-card p-4">
-                    <div class="stat-icon bg-warning bg-opacity-10 rounded-circle mx-auto mb-3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <div class="stat-icon bg-warning bg-opacity-10 rounded-circle mx-auto mb-3">
                         <i class="fas fa-users text-warning fs-2"></i>
                     </div>
                     <h3 class="fw-bold text-warning" data-count="15000">0</h3>
@@ -108,7 +105,7 @@
             </div>
             <div class="col-md-3 col-6 text-center" data-aos="fade-up" data-aos-delay="300">
                 <div class="stat-card p-4">
-                    <div class="stat-icon bg-info bg-opacity-10 rounded-circle mx-auto mb-3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <div class="stat-icon bg-info bg-opacity-10 rounded-circle mx-auto mb-3">
                         <i class="fas fa-clock text-info fs-2"></i>
                     </div>
                     <h3 class="fw-bold text-info" data-count="24">0</h3>
@@ -121,7 +118,7 @@
         <div class="row mt-5 pt-5">
             <div class="col-lg-6 mb-5" data-aos="fade-right">
                 <div class="mission-card bg-primary text-white rounded-3 p-5 h-100">
-                    <div class="icon-wrapper bg-white bg-opacity-20 rounded-circle p-3 mb-4" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                    <div class="icon-wrapper bg-white bg-opacity-20 rounded-circle p-3 mb-4">
                         <i class="fas fa-bullseye fs-2"></i>
                     </div>
                     <h3 class="fw-bold mb-3">Misi Kami</h3>
@@ -135,7 +132,7 @@
             </div>
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="vision-card bg-dark text-white rounded-3 p-5 h-100">
-                    <div class="icon-wrapper bg-white bg-opacity-20 rounded-circle p-3 mb-4" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                    <div class="icon-wrapper bg-white bg-opacity-20 rounded-circle p-3 mb-4">
                         <i class="fas fa-eye fs-2"></i>
                     </div>
                     <h3 class="fw-bold mb-3">Visi Kami</h3>
@@ -152,6 +149,7 @@
 </section>
 
 <style>
+/* Hero Section */
 .about-hero {
     background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
     position: relative;
@@ -172,27 +170,37 @@
     min-height: 50vh;
 }
 
+/* Main Section */
 .about-main {
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
 }
 
+/* Floating Badge */
 .floating-badge {
     animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
+/* Feature Items */
 .feature-icon {
     transition: all 0.3s ease;
+    width: 54px;
+    height: 54px;
 }
 
 .feature-item:hover .feature-icon {
     transform: scale(1.1);
 }
 
+/* Stat Cards */
 .stat-card {
     transition: all 0.3s ease;
 }
@@ -201,52 +209,141 @@
     transform: translateY(-5px);
 }
 
-.mission-card, .vision-card {
+.stat-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mission & Vision Cards */
+.mission-card,
+.vision-card {
     transition: all 0.3s ease;
 }
 
-.mission-card:hover, .vision-card:hover {
+.mission-card:hover,
+.vision-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2) !important;
 }
 
-.badge {
-    font-size: 0.8rem;
-    padding: 0.5rem 1rem;
+.icon-wrapper {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .display-5 {
+        font-size: 2rem;
+    }
+
+    .stat-card {
+        padding: 1.5rem !important;
+    }
+
+    .mission-card,
+    .vision-card {
+        padding: 2rem !important;
+    }
 }
 </style>
 
 <script>
-// Animated counter
 document.addEventListener('DOMContentLoaded', function() {
-    const counters = document.querySelectorAll('[data-count]');
+    // Initialize AOS if available
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+    }
 
-    counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-count'));
-        const duration = 2000;
-        const step = target / (duration / 16);
+    // Animated Counter Function
+    function animateCounter(element, target, duration = 2000) {
+        let start = 0;
+        const increment = target / (duration / 16);
         let current = 0;
 
-        const updateCount = () => {
-            current += step;
+        function update() {
+            current += increment;
             if (current < target) {
-                counter.textContent = Math.floor(current);
-                requestAnimationFrame(updateCount);
+                element.textContent = Math.floor(current);
+                requestAnimationFrame(update);
             } else {
-                counter.textContent = target;
+                element.textContent = target;
             }
-        };
+        }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    updateCount();
-                    observer.unobserve(entry.target);
-                }
-            });
+        update();
+    }
+
+    // Intersection Observer for Counter Animation
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.getAttribute('data-count'));
+                animateCounter(counter, target);
+                observer.unobserve(counter);
+            }
+        });
+    }, {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe all counter elements
+    const counters = document.querySelectorAll('[data-count]');
+    counters.forEach(counter => {
+        counterObserver.observe(counter);
+    });
+
+    // Add hover effects for interactive elements
+    const statCards = document.querySelectorAll('.stat-card');
+    const featureItems = document.querySelectorAll('.feature-item');
+
+    statCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transition = 'all 0.3s ease';
+        });
+    });
+
+    featureItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            const icon = item.querySelector('.feature-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.1)';
+            }
         });
 
-        observer.observe(counter);
+        item.addEventListener('mouseleave', () => {
+            const icon = item.querySelector('.feature-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1)';
+            }
+        });
+    });
+
+    // Parallax effect for hero section (optional)
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.about-hero');
+        if (hero) {
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translate3d(0, ${rate}px, 0)`;
+        }
     });
 });
 </script>

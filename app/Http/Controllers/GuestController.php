@@ -12,7 +12,6 @@ class GuestController extends Controller
     public function beranda()
     {
         return view('pages.beranda');
-
     }
 
     /**
@@ -45,5 +44,9 @@ class GuestController extends Controller
     public function main()
     {
         return view('pages.main');
+    }
+    public function profilPengembang()
+    {
+        return view('profil-pengembang');
     }
 }
