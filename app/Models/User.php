@@ -60,8 +60,8 @@ class User extends Authenticatable
      */
     public function getProfilePictureUrlAttribute()
     {
-        if ($this->profile_picture && Storage::exists('public/' . $this->profile_picture)) {
-            return Storage::url($this->profile_picture);
+        if ($this->profile_picture && file_exists(storage_path('app/public/' . $this->profile_picture))) {
+            return asset('storage/' . $this->profile_picture);
         }
 
         // Generate default avatar from name initials (COMPRESSED - small size)
@@ -117,7 +117,7 @@ class User extends Authenticatable
         }
 
         // Warna berdasarkan role
-        $color = match($this->role) {
+        $color = match ($this->role) {
             'admin' => 'DC2626', // red
             'staff' => 'F59E0B', // yellow/orange
             'user'  => '3B82F6', // blue
@@ -185,7 +185,6 @@ class User extends Authenticatable
             self::resizeAndSaveImage($file, $smallPath, 50, 60);
 
             return $originalPath;
-
         } catch (\Exception $e) {
             \Log::error('Error compressing profile picture: ' . $e->getMessage());
             return null;
@@ -272,8 +271,18 @@ class User extends Authenticatable
         }
 
         // Resize image dengan kualitas baik
-        imagecopyresampled($newImage, $image, 0, 0, 0, 0,
-            $newWidth, $newHeight, $originalWidth, $originalHeight);
+        imagecopyresampled(
+            $newImage,
+            $image,
+            0,
+            0,
+            0,
+            0,
+            $newWidth,
+            $newHeight,
+            $originalWidth,
+            $originalHeight
+        );
 
         // Save image ke storage
         $fullPath = storage_path('app/public/' . $path);

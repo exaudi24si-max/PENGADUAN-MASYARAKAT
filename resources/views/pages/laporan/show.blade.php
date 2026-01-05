@@ -107,15 +107,20 @@
                                             <i class="fas fa-camera me-2"></i>Foto Pendukung
                                         </h6>
                                         <div class="ps-4">
-                                            @if ($laporan->foto)
-                                                <div class="text-center">
-                                                    <img src="{{ asset('storage/' . $laporan->foto) }}" alt="Foto Laporan"
-                                                        class="img-fluid rounded shadow" style="max-height: 300px;">
-                                                    <div class="mt-2">
-                                                        <a href="{{ asset('storage/' . $laporan->foto) }}" target="_blank"
-                                                            class="btn btn-sm btn-outline-primary">
-                                                            <i class="fas fa-external-link-alt me-1"></i> Lihat Full Size
-                                                        </a>
+                                            @php
+                                                $fotos = $laporan->foto ? json_decode($laporan->foto, true) : [];
+                                            @endphp
+
+                                            @if (!empty($fotos))
+                                                <div class="gallery-wrapper">
+                                                    <div class="gallery-grid">
+                                                        @foreach ($fotos as $foto)
+                                                            <a href="{{ asset('storage/' . $foto) }}" target="_blank"
+                                                                class="gallery-item">
+                                                                <img src="{{ asset('storage/' . $foto) }}"
+                                                                    alt="Foto Laporan">
+                                                            </a>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             @else
@@ -124,6 +129,7 @@
                                                     <p class="mb-0">Tidak ada foto yang diunggah</p>
                                                 </div>
                                             @endif
+
                                         </div>
                                     </div>
 
@@ -175,40 +181,47 @@
 
 @push('styles')
     <style>
-        .section-title {
-            position: relative;
-            padding-bottom: 15px;
+        /* ===============================
+           FIX KHUSUS HALAMAN DETAIL
+        ================================ */
+
+        /* sembunyikan floating whatsapp */
+        .floating-whatsapp {
+            display: none !important;
         }
 
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* footer jangan bikin halaman kepanjangan */
+        .site-footer {
+            margin-top: 0 !important;
         }
 
-        .card {
-            border-radius: 10px;
+        /* rapikan container detail */
+        #laporan-section {
+            padding-bottom: 0 !important;
+        }
+
+        /* paksa foto agar tidak kebesaran */
+        .gallery-item,
+        .foto-wrapper img {
+            max-height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        /* cegah scroll aneh */
+        body {
+            overflow-x: hidden;
+        }
+
+        .gallery-item {
+            height: 140px;
             overflow: hidden;
         }
 
-        .card-header {
-            border-radius: 10px 10px 0 0 !important;
-        }
-
-        h6.text-primary {
-            border-bottom: 2px solid #e9ecef;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
-        .alert-light {
-            background-color: #f8f9fa;
-            border: 1px dashed #dee2e6;
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 @endpush

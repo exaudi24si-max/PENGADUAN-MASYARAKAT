@@ -17,7 +17,6 @@ class UserController extends Controller
     {
         // PAGINATION, SEARCH & FILTER DI SINI
         $query = User::query();
-
         // SEARCH - Pencarian berdasarkan name, email
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
@@ -26,21 +25,16 @@ class UserController extends Controller
                   ->orWhere('email', 'like', "%{$search}%");
             });
         }
-
         // FILTER Role
         if ($request->has('role') && !empty($request->role)) {
             $query->where('role', $request->role);
         }
-
         // Sorting default by created_at desc
         $query->orderBy('created_at', 'desc');
-
         // PAGINATION - 12 data per halaman untuk tampilan grid
         $users = $query->paginate(12);
-
         // Data untuk dropdown filter role
         $roleList = User::select('role')->distinct()->pluck('role');
-
         // END PAGINATION & FILTER
         return view('pages.user.index', compact('users', 'roleList'));
     }
@@ -65,24 +59,20 @@ class UserController extends Controller
             'role' => 'required|in:admin,staff,user',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB max, support webp
         ]);
-
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-
         $data = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role
         ];
-
         // Handle profile picture upload WITH COMPRESSION
         if ($request->hasFile('profile_picture')) {
             $path = User::compressAndSaveProfilePicture($request->file('profile_picture'));
-
             if ($path) {
                 $data['profile_picture'] = $path;
             } else {
@@ -91,9 +81,7 @@ class UserController extends Controller
                     ->withInput();
             }
         }
-
         User::create($data);
-
         return redirect()->route('users.index')
             ->with('success', 'User berhasil ditambahkan');
     }
@@ -122,7 +110,6 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::findOrFail($id);
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
@@ -131,38 +118,31 @@ class UserController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'remove_picture' => 'nullable|boolean'
         ]);
-
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-
         $data = [
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role
         ];
-
         // Update password hanya jika diisi
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
-
         // Handle remove existing picture
         if ($request->has('remove_picture') && $user->profile_picture) {
             $user->deleteProfilePictureFiles();
             $data['profile_picture'] = null;
         }
-
         // Handle new profile picture upload WITH COMPRESSION
         if ($request->hasFile('profile_picture')) {
             // Delete old picture files if exists
             $user->deleteProfilePictureFiles();
-
             // Compress and save new picture
             $path = User::compressAndSaveProfilePicture($request->file('profile_picture'));
-
             if ($path) {
                 $data['profile_picture'] = $path;
             } else {
@@ -171,9 +151,7 @@ class UserController extends Controller
                     ->withInput();
             }
         }
-
         $user->update($data);
-
         return redirect()->route('users.index')
             ->with('success', 'User berhasil diupdate');
     }

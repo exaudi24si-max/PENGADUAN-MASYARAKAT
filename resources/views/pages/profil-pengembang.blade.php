@@ -32,18 +32,7 @@
                                 <div class="floating-element el-3"></div>
                             </div>
 
-                            <div class="profile-photo-container mb-4">
-                                <div class="profile-photo-wrapper">
-                                    <div class="profile-photo">
-                                        <img src="{{ asset('pengaduan-masyarakat/images/ganteng.png') }}"
-                                             alt="Foto Pengembang"
-                                             class="img-fluid rounded-circle"
-                                             onerror="this.src='https://ui-avatars.com/api/?name=EXAUDI&background=0D6EFD&color=fff&size=200'">
-                                        <div class="photo-overlay"></div>
-                                    </div>
-                                    <div class="online-status"></div>
-                                </div>
-                            </div>
+                           
 
                             <h3 class="fw-bold text-white mb-2 display-6">EXAUDI BANJARNAHOR</h3>
                             <p class="text-light mb-1 fs-5">Full Stack Developer</p>

@@ -48,25 +48,7 @@
         </div>
     </div>
 
-    <script>
-        function openWhatsAppModal() {
-            const modal = new bootstrap.Modal(document.getElementById('whatsappModal'));
-            modal.show();
-        }
-
-        function redirectToWhatsApp() {
-            const phoneNumber = document.getElementById('whatsappOption').value;
-            const message = document.getElementById('whatsappMessage').value;
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-            window.open(whatsappUrl, '_blank');
-
-            // Tutup modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('whatsappModal'));
-            modal.hide();
-        }
-    </script>
+    
 <footer class="site-footer bg-dark text-white py-4">
     <div class="container text-center">
         <p class="fw-semibold mb-1">

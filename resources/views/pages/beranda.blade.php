@@ -63,7 +63,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Slide 2 -->
                         <div class="slideshow-slide">
                             <img
@@ -78,7 +77,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Slide 3 -->
                         <div class="slideshow-slide">
                             <img

@@ -12,9 +12,7 @@ class WargaController extends Controller
     public function index(Request $request)
     {
         // PAGINATION, SEARCH & FILTER DI SINI
-
         $query = Warga::query();
-
         // SEARCH - Pencarian berdasarkan nama, email, No_Hp, pekerjaan
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
@@ -26,29 +24,21 @@ class WargaController extends Controller
                   ->orWhere('agama', 'like', "%{$search}%");
             });
         }
-
         // FILTER Jenis Kelamin
         if ($request->has('jenis_kelamin') && !empty($request->jenis_kelamin)) {
             $query->where('jenis_kelamin', $request->jenis_kelamin);
         }
-
         // FILTER Agama
         if ($request->has('agama') && !empty($request->agama)) {
             $query->where('agama', $request->agama);
         }
-
         // Sorting default by created_at desc
         $query->orderBy('created_at', 'desc');
-
         // PAGINATION - 12 data per halaman untuk tampilan grid
         $wargas = $query->paginate(12);
-
         // Data untuk dropdown filter agama
         $agamaList = Warga::select('agama')->distinct()->pluck('agama');
-      
         // END PAGINATION & FILTER
-
-
         return view('pages.warga.index', compact('wargas', 'agamaList'));
     }
 
@@ -73,9 +63,7 @@ class WargaController extends Controller
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'email'         => 'nullable|email|max:255',
             'No_Hp'         => 'nullable|string|max:15',
-        ]);
-
-        $data = [
+        ]);        $data = [
             'nama'          => $request->nama,
             'agama'         => $request->agama,
             'pekerjaan'     => $request->pekerjaan,
@@ -83,9 +71,7 @@ class WargaController extends Controller
             'email'         => $request->email,
             'No_Hp'         => $request->No_Hp,
         ];
-
         Warga::create($data);
-
         return redirect()->route('warga.index')->with('success', 'Penambahan Data Berhasil!');
     }
 
@@ -120,9 +106,7 @@ class WargaController extends Controller
             'email'         => 'nullable|email|max:255',
             'No_Hp'         => 'nullable|string|max:15',
         ]);
-
         $warga = Warga::findOrFail($id);
-
         $data = [
             'nama'          => $request->nama,
             'agama'         => $request->agama,
@@ -131,9 +115,7 @@ class WargaController extends Controller
             'email'         => $request->email,
             'No_Hp'         => $request->No_Hp,
         ];
-
         $warga->update($data);
-
         return redirect()->route('warga.index')->with('success', 'Data warga berhasil diupdate!');
     }
 

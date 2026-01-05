@@ -148,27 +148,24 @@
 
                                 <!-- ✅ MODIFIKASI: Tambah foto di card -->
                                 {{-- Foto --}}
-                                @if (isset($laporan->foto) && !empty($laporan->foto))
-                                    <div class="mb-3">
-                                        <div class="position-relative"
-                                            style="height: 150px; overflow: hidden; border-radius: 8px;">
-                                            <img src="{{ asset('storage/' . $laporan->foto) }}" alt="Foto Laporan"
-                                                class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                @php
+                                    $fotos = $laporan->foto ? json_decode($laporan->foto, true) : [];
+                                @endphp
 
-                                            <div
-                                                class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-50 text-white p-2">
-                                                <small>
-                                                    <i class="fas fa-image me-1"></i>
-                                                    <a href="{{ asset('storage/' . $laporan->foto) }}" target="_blank"
-                                                        class="text-white text-decoration-none">
-                                                        Lihat Foto
-                                                    </a>
-                                                </small>
-                                            </div>
+                                @if (!empty($fotos))
+                                    <div class="mb-3">
+                                        <div class="foto-card position-relative">
+                                            <img src="{{ asset('storage/' . $fotos[0]) }}" alt="Foto Laporan"
+                                                class="img-fluid w-100 h-100">
+
+                                            @if (count($fotos) > 1)
+                                                <span class="badge bg-dark position-absolute top-0 end-0 m-2">
+                                                    +{{ count($fotos) - 1 }} foto
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 @endif
-
 
                                 {{-- Deskripsi --}}
                                 <p class="card-text">{{ Str::limit($laporan->deskripsi, 120) }}</p>
@@ -310,108 +307,104 @@
 
 {{-- Keep your existing styles --}}
 @push('styles')
-    <style>
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #e9ecef;
-        }
+<style>
+    /* ====== GENERAL ====== */
+    .section-title {
+        position: relative;
+        padding-bottom: 12px;
+        margin-bottom: 25px;
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-        }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
 
-        .section-title {
-            position: relative;
-            padding-bottom: 15px;
-        }
+    /* ====== CARD DETAIL ====== */
+    .detail-card {
+        border-radius: 12px;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
 
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+    .detail-card .card-header {
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        font-weight: 600;
+    }
 
-        .badge {
-            font-size: 0.7rem;
-            padding: 0.3em 0.6em;
-        }
+    /* ====== STATUS BADGE ====== */
+    .badge-status {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+        border-radius: 20px;
+    }
 
-        .btn-group {
-            display: flex;
-            gap: 1px;
-        }
+    /* ====== GALERI FOTO ====== */
+    .gallery-wrapper {
+        margin-top: 15px;
+    }
 
-        .btn-group .btn,
-        .btn-group form {
-            flex: 1;
-        }
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
 
-        .btn-group .btn {
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            font-size: 0.8rem;
-        }
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+        background: #f1f3f5;
+        height: 140px;
+        cursor: pointer;
+    }
 
-        .btn-group .btn:first-child {
-            border-top-left-radius: 0.375rem;
-            border-bottom-left-radius: 0.375rem;
-        }
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
 
-        .btn-group .btn:last-child {
-            border-top-right-radius: 0.375rem;
-            border-bottom-right-radius: 0.375rem;
-        }
+    .gallery-item:hover img {
+        transform: scale(1.08);
+    }
 
-        .btn-group form button {
-            width: 100%;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            font-size: 0.8rem;
-        }
+    .gallery-item::after {
+        content: '🔍 Lihat';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        color: #fff;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
 
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
+    .gallery-item:hover::after {
+        opacity: 1;
+    }
 
-        .border-top {
-            border-color: #e9ecef !important;
-        }
+    /* ====== INFO LIST ====== */
+    .info-list small {
+        display: block;
+        margin-bottom: 8px;
+        color: #6c757d;
+    }
 
-        /* Pagination styling */
-        .pagination {
-            margin-bottom: 0;
-        }
-
-        .page-link {
-            color: #667eea;
-            border: 1px solid #dee2e6;
-        }
-
-        .page-item.active .page-link {
-            background-color: #667eea;
-            border-color: #667eea;
-        }
-
-        /* ✅ MODIFIKASI: Style untuk foto di card */
-        .position-relative {
-            position: relative !important;
-        }
-
-        .bg-opacity-50 {
-            background-color: rgba(0, 0, 0, 0.5) !important;
-        }
-    </style>
+    .info-list i {
+        width: 18px;
+    }
+</style>
 @endpush
+

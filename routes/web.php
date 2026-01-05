@@ -26,7 +26,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ==================== ROUTES KHUSUS ADMIN ====================
 // SEMUA ROUTE DI BAWAH INI HANYA BISA DIAKSES OLEH ADMIN
-Route::middleware(['check.login'])->group(function () {
+Route::middleware(['check.login','check.role'])->group(function () {
 
     // Resource routes (HANYA ADMIN YANG BISA AKSES)
     Route::resource('warga', WargaController::class);

@@ -17,7 +17,6 @@
 
         <!-- Services -->
         <div class="row g-4">
-
             <!-- Pengaduan -->
             <div class="col-md-6 col-lg-3">
                 <div class="service-card text-center">
@@ -42,7 +41,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Aspirasi -->
             <div class="col-md-6 col-lg-3">
                 <div class="service-card text-center">
@@ -67,7 +65,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Tindak Lanjut -->
             <div class="col-md-6 col-lg-3">
                 <div class="service-card text-center">
@@ -92,7 +89,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Monitoring -->
             <div class="col-md-6 col-lg-3">
                 <div class="service-card text-center">
@@ -117,7 +113,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!-- CTA -->
