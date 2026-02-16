@@ -32,7 +32,7 @@
                                 <div class="floating-element el-3"></div>
                             </div>
 
-                           
+
 
                             <h3 class="fw-bold text-white mb-2 display-6">EXAUDI BANJARNAHOR</h3>
                             <p class="text-light mb-1 fs-5">Full Stack Developer</p>
